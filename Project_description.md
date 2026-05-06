@@ -5,15 +5,79 @@ A data story is a communication tool that integrates three elements: data, visua
 Data stories are generated through a diverse array of media, ranging from traditional digital software to physical, embodied interfaces that use robots to represent information. Since Large Language Models (LLMs) becomming more popular many modern versions of story telling approches use them. LLMs are used to plan animation scenes, interpret the data, translate narrative text into commands to for example drive pysical robots [^5], picture generation [^6] or generate narratives [^4].
 
   
-## Task definition  
-Be specific about what functionality you want to achieve, what will be part of the task, and what will not be part of it.  
-Define the work as concretely as possible!  
+## Task Definition
 
-  
-## Requirements  
-Define the functional and non-functional components of your project. What are must-haves, what are optionals, what would be nice-to-haves?  
-Have a look at the topic software requirement specifications, and e.g., use the MoSCoW method.  
-[https://en.wikipedia.org/wiki/Software_requirements_specification](https://en.wikipedia.org/wiki/Software_requirements_specification)  
+The goal of this project is to design and implement an interactive, explorable 3D data storytelling application titled *"The Search for Habitable Worlds"*. The application presents GitHub's open-source ecosystem as a navigable universe, built with Three.js, in which the user takes on the role of a space explorer searching for "habitable worlds" — thriving, actively maintained software projects.
+
+The underlying dataset is [ronantakizawa/github-top-projects](https://huggingface.co/datasets/ronantakizawa/github-top-projects) from Hugging Face, which contains approximately 423,000 entries of daily GitHub trending repositories from 2012 to 2024, including star counts, fork counts, rankings, and dates. Where necessary, this data is enriched via the GitHub REST API to obtain repository metadata such as primary programming language, description, and topics.
+
+### Data-to-Space Mapping
+
+The application maps GitHub data onto celestial objects using the following metaphor:
+
+- **Galaxies** represent programming languages (e.g., Python, JavaScript, Rust, C). Their position within the universe encodes the age of the language: older languages (C, Fortran) are located toward the outer rim of the universe, while younger languages (Rust, Zig, TypeScript) are positioned closer to the center — a "Big Bang" point from which the universe expands outward over time. This spatial arrangement provides a natural narrative arc: the user's spaceship begins at the ancient outer edge and travels inward through progressively younger and more active galaxies.
+- **Stars / Suns** within each galaxy represent individual repositories. Their size encodes the star count (GitHub stars), and their brightness or luminosity reflects recent trending activity (ranking frequency and recency).
+- **Planets** orbiting a star represent notable forks or sub-projects of that repository.
+- **Staleness of data** is encoded in the state of each sun: an actively trending repository appears as a bright main-sequence star, a repository that was once popular but has become inactive degrades into a red giant or white dwarf, and a repository that has been archived or abandoned collapses into a black hole.
+
+### Narrative and Interaction Design
+
+Following the storytelling concept *"The Search for Habitable Worlds,"* the application frames data exploration as a space expedition. A project is considered "habitable" if it is actively maintained, growing in popularity, and welcoming to contributors — analogous to a planet with the right temperature, atmosphere, and water. Concretely, the application provides:
+
+- **User input:** The user can search for or select a specific project (star/planet) by name. The 3D scene supports mouse-based rotation and zoom via orbit controls. The user can click on any celestial object to initiate a camera fly-to animation, traveling through the universe toward the selected target.
+- **Output — Visual:** Upon arrival at a star or planet, the application displays contextual information panels (text boxes) showing repository metadata such as name, description, star count, fork count, language, and trending history. Color coding is used to communicate key metrics (e.g., warm colors for highly active projects, cold blue tones for dormant ones).
+- **Output — Audio (nice-to-have):** LLM-generated voice narration provides spoken summaries about each visited project, delivered in the style of a ship's log or mission briefing (e.g., *"Approaching star React in the JavaScript galaxy — 220,000 stars detected, high habitability index, last trending activity: 3 days ago"*).
+
+### 3D Assets and Generation
+
+Planet and star models are either procedurally generated within Three.js (e.g., sphere geometries with shader-based surfaces), sourced from free-to-use 3D asset libraries, or generated using AI image generation tools for textures. The application does not require photorealistic rendering; a stylized, visually coherent aesthetic is sufficient.
+
+### Scope Boundaries
+
+The following aspects are explicitly *not* part of this project:
+
+- Real-time synchronization with live GitHub data (the application uses a static snapshot of the dataset, optionally enriched once via API).
+- Multi-user collaboration or shared exploration sessions.
+- Training or fine-tuning of custom machine learning models (existing LLM APIs are used for narrative generation).
+- Support for datasets beyond GitHub repositories (the application is designed for this specific dataset and metaphor).
+- A comprehensive summative user study (a small formative evaluation with 3–5 participants is planned to validate the concept).
+- Applications in the medical domain.
+
+## Requirements
+
+The following requirements are categorized using the MoSCoW method [^7].
+
+**Must Have:**
+- A 3D explorable universe rendered in the browser using Three.js, containing galaxies (programming languages), stars (repositories), and planets (forks).
+- Spatial encoding of language age via galactic position (older languages at the outer rim, younger languages near the center).
+- Visual encoding of repository metrics: star count mapped to sun size, trending recency mapped to brightness/luminosity, and data staleness mapped to celestial state (main-sequence star, red giant, white dwarf, black hole).
+- Interactive camera fly-to animation when the user selects a celestial object.
+- Mouse-based orbit controls (rotation, zoom, pan) for scene navigation.
+- Contextual information panels displaying repository metadata (name, description, stars, forks, language, trending history) upon selection.
+- Color coding of celestial objects to communicate activity level (warm = active, cold = dormant).
+- Data pipeline that loads and preprocesses the github-top-projects dataset from Hugging Face.
+
+**Should Have:**
+- A search function allowing the user to find and navigate to a specific repository by name.
+- Enrichment of the dataset with programming language and description metadata via the GitHub REST API.
+- A guided narrative mode that flies the user through the universe along a predefined story path (e.g., from the outer rim inward, visiting notable stars).
+- Procedurally generated or AI-generated textures for planets and stars to visually differentiate categories.
+
+**Could Have:**
+- LLM-generated textual descriptions for repositories, presented in information panels as narrative summaries.
+- Voice narration (text-to-speech) delivering spoken mission briefings about visited projects.
+- Animated orbital mechanics for planets around their parent stars.
+- Visual representation of trending "supernova" events (repositories that gained massive popularity in a short time).
+- Background ambient soundscape to enhance immersion.
+
+**Won't Have:**
+- Real-time live data synchronization with GitHub.
+- Support for multiple concurrent users or collaborative exploration.
+- Custom-trained machine learning models.
+- Support for non-GitHub datasets.
+- A full summative user study (only a small formative evaluation is planned).
+
+[^7]: D. Clegg and R. Barker, *Case Method Fast-Track: A RAD Approach*. Boston, MA: Addison-Wesley, 1994.
   
 ## Structure  
 Describe the structure your project will follow, e.g., through work packages. Define what parts of the project are independent, which require other components to be done beforehand, etc.  
