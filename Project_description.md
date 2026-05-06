@@ -216,8 +216,38 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 **Dependencies:** All previous WPs (report can be done partially)
 
   
-## Time plan  
-Generally the project is divided into three main components: preparation, implementation, and documentation. Those will be worked on in a parallel manner. A more concrete time plan within these components is based on the work packages. 
+## Time plan
+
+The project duration spans from 07.05.2026 to 21.07.2026. The work is divided into structured phases to ensure steady progress and timely delivery.
+
+### Phase 1: Planning & Research (07.05 – 14.05)
+- Finalize project idea and scope
+- Review related work, datasets, and tools
+- Define system architecture and requirements
+
+### Phase 2: Design (15.05 – 25.05)
+- Design system components and workflows
+- Define data structures and interfaces
+- Create initial UI/UX sketches
+
+### Phase 3: Core Implementation (26.05 – 20.06)
+- Develop main functionalities
+- Implement core algorithms
+- Integrate basic system components
+
+### Phase 4: Integration & Advanced Features (21.06 – 05.07)
+- Combine all modules into a working system
+- Add optional and advanced features
+- Improve performance and usability
+
+### Phase 5: Testing & Debugging (06.07 – 14.07)
+- Perform functional testing
+- Fix bugs and optimize system behavior
+- Validate results against requirements
+### Phase 6: Finalization & Submission (15.07 – 21.07)
+- Prepare documentation and report
+- Final code cleanup and polishing
+- Prepare presentation
   
 ## Work distribution  
 Describe the distribution of your work among your team members. Keep in mind that everyone should participate in the different phases described in the task slides.  
