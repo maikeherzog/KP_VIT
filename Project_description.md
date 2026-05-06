@@ -249,9 +249,26 @@ The project duration spans from 07.05.2026 to 21.07.2026. The work is divided in
 - Final code cleanup and polishing
 - Prepare presentation
   
-## Work distribution  
-Describe the distribution of your work among your team members. Keep in mind that everyone should participate in the different phases described in the task slides.  
-Everybody should implement, design, and research related work; the project description/documentation should be a collaborative effort of all team members.
+## Work distribution
+
+The project will be carried out collaboratively by all four team members, with a flexible and adaptive work distribution that may evolve as the project progresses and individual strengths become clearer.
+
+At this stage, responsibilities are not strictly fixed. Instead, the team will follow a shared ownership approach, where all members contribute to the core phases of the project:
+
+- **Research & Literature Review**: All members will participate in exploring related work, tools, and datasets.
+- **Design**: System architecture, component design, and planning will be done collaboratively.
+- **Implementation**: Development tasks will be distributed dynamically based on progress, complexity, and individual expertise.
+- **Testing & Debugging**: All members will be involved in validating the system and improving reliability.
+- **Documentation**: The project report and documentation will be written jointly and reviewed by all team members.
+
+As the project progresses, task specialization may naturally emerge, and responsibilities can be adjusted accordingly to improve efficiency and ensure balanced workload distribution.
+
+Regular team meetings will be held to:
+
+- Track progress
+- Assign short-term tasks
+- Resolve blockers
+- Ensure equal contribution from all members
 
 
 [^1]: J. L. Pardo u. a., „One Dataset – Three Stories: Data Storytelling for Climate Change Awareness“, in 2023 27th International Conference Information Visualisation (IV), Juli 2023, S. 194–197. doi: 10.1109/IV60283.2023.00042.
