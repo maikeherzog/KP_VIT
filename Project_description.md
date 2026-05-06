@@ -1,15 +1,15 @@
 # Documentation (Designing and Conceptualizing a Data Storytelling Application) 
 ## General Introduction to the Topic (Name can be adjusted to fit your needs)  
-A data story is a communication tool that integrates three elements: data, visual forms, and a narrative component [^1]. Additional to the graphics it pair it with words to provide more explanations that guide the audience through the analysis process and helps with understanding. This approach connects quantitative evidence with qualitative narratives, making abstract or "cold" data more understandable, relevant, and accessible for non-experts [^2] [^3]. Data stories are an effective way to present complex information and inspire action [^1]. Data stories can be found in many different fields. For example in the climate Change Communication [^1] [^2], in data analysis [^4], planning (like trips or theater rehearsals) [^5] or also supporting refugee families in coping with the loss of their homeland and identity through the sharing of memories [^6].
+A data story is a communication tool that combines three elements: data, visual forms, and a narrative component [^1]. For this technique, graphical elements get paired with written or auditory explanations to provide guidance throughout the analysis process of a topic and help with understanding. This approach connects quantitative evidence with qualitative narratives, making abstract or "cold" data more understandable, relevant, and accessible for non-experts [^2] [^3]. Data stories are an effective way to present complex information and inspire action [^1]. Usages of that can be found in many different fields. For example in the climate change communication [^1] [^2], in data analysis [^4], planning (like trips or theater rehearsals) [^5] or also supporting refugee families in coping with the loss of their homeland and identity through the sharing of memories [^6].
 
-Data stories are generated through a diverse array of media, ranging from traditional digital software to physical, embodied interfaces that use robots to represent information. Since Large Language Models (LLMs) becomming more popular many modern versions of story telling approches use them. LLMs are used to plan animation scenes, interpret the data, translate narrative text into commands to for example drive pysical robots [^5], picture generation [^6] or generate narratives [^4].
+Data stories can be generated through a diverse array of media, ranging from traditional digital software to physical, embodied interfaces, that use robots to represent information. Since Large Language Models (LLMs) have become more popular, many modern versions of data story telling approches make use of such. LLMs are therefore used to plan animation scenes, interpret data, translate narrative text into commands for steering pysical robots [^5], generating pictures [^6] or the generation of whole narratives [^4].
 
   
 ## Task Definition
 
-The goal of this project is to design and implement an interactive, explorable 3D data storytelling application titled *"The Search for Habitable Worlds"*. The application presents GitHub's open-source ecosystem as a navigable universe, built with Three.js, in which the user takes on the role of a space explorer searching for "habitable worlds" — thriving, actively maintained software projects.
+The goal of this project is to design and implement an interactive, explorable threedimensional (3D) data storytelling application titled *"The Search for Habitable Worlds"*. The application presents GitHub's open-source ecosystem as a navigable universe, built with Three.js, in which the user takes on the role of a space explorer searching for "habitable worlds" — thriving, actively maintained software projects.
 
-The underlying dataset is [ronantakizawa/github-top-projects](https://huggingface.co/datasets/ronantakizawa/github-top-projects) from Hugging Face, which contains approximately 423,000 entries of daily GitHub trending repositories from 2012 to 2024, including star counts, fork counts, rankings, and dates. Where necessary, this data is enriched via the GitHub REST API to obtain repository metadata such as primary programming language, description, and topics.
+The underlying dataset will be [ronantakizawa/github-top-projects](https://huggingface.co/datasets/ronantakizawa/github-top-projects) from Hugging Face, which contains approximately 423,000 entries of daily GitHub trending repositories from 2012 to 2024, including star counts, fork counts, rankings, and dates. Where necessary, this data is enriched via the GitHub REST API to obtain repository metadata such as primary programming language, description, and topics.
 
 ### Data-to-Space Mapping
 
@@ -22,7 +22,7 @@ The application maps GitHub data onto celestial objects using the following meta
 
 ### Narrative and Interaction Design
 
-Following the storytelling concept *"The Search for Habitable Worlds,"* the application frames data exploration as a space expedition. A project is considered "habitable" if it is actively maintained, growing in popularity, and welcoming to contributors — analogous to a planet with the right temperature, atmosphere, and water. Concretely, the application provides:
+Following the storytelling concept *"The Search for Habitable Worlds,"* the application frames data exploration as a space expedition. A project is considered "habitable", if it is actively maintained, growing in popularity, and welcoming to contributors — analogous to a planet with the right temperature, atmosphere, and water. Concretely, the application provides:
 
 - **User input:** The user can search for or select a specific project (star/planet) by name. The 3D scene supports mouse-based rotation and zoom via orbit controls. The user can click on any celestial object to initiate a camera fly-to animation, traveling through the universe toward the selected target.
 - **Output — Visual:** Upon arrival at a star or planet, the application displays contextual information panels (text boxes) showing repository metadata such as name, description, star count, fork count, language, and trending history. Color coding is used to communicate key metrics (e.g., warm colors for highly active projects, cold blue tones for dormant ones).
@@ -157,7 +157,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
   
 **Dependencies:** WP4 (UI design can start earlier)
 
-### WP7 - Narrative & Storytelling
+### WP6 - Narrative & Storytelling
 **Goal:** Add guided exploration and storytelling.
 
 **Tasks:**
@@ -171,7 +171,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
   
 **Dependencies:** WP5
 
-### WP8 - Visual Enhancements & Effects (Optional)
+### WP7 - Visual Enhancements & Effects (Optional)
 **Goal:** Improve immersion.
 
 **Tasks:**
@@ -185,7 +185,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
   
 **Dependencies:** WP3
 
-### WP9 - Documentation
+### WP8 - Documentation
 **Goal:** Complete documentation of the project.
 
 **Tasks:**
