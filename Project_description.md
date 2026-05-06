@@ -80,19 +80,129 @@ The following requirements are categorized using the MoSCoW method [^7].
 [^7]: D. Clegg and R. Barker, *Case Method Fast-Track: A RAD Approach*. Boston, MA: Addison-Wesley, 1994.
   
 ## Structure  
-Describe the structure your project will follow, e.g., through work packages. Define what parts of the project are independent, which require other components to be done beforehand, etc.  
+The project is divided into modular work packages (WPs) that reflect the main system components: data processing, 3D visualization, interaction, narrative layer.
 
-WP1: finding a idea with brainstorming, sketching, ...
-- WP2: Literature Review and preparing a catalogue
-	- research about data storytelling, data visualization, application and design of data story applications, ...
-- WP3: Implementation of a prototype
-	- choose dataset
-	- conceptualize the idea of a storytelling application
-	- each step sketched or wireframed
-	- multiple out and inputs
-	- UX design of interface
-	- implementation in a web based or python based prototype
-- WP4: document all
+### WP1 - Data Acquisition & Preprocessing
+**Goal:** Prepare the Dataset for usage.
+
+**Tasks:**
+- Load dataset from Hugging Face (github-top-projects)
+- Clean and normalize data if needed (duplicates, ...)
+- Optional: Enrich via GitHub REST API (language, description, topics)
+  
+**Outputs:**
+- Structured dataset
+  
+**Dependencies:** none
+
+### WP2 - Data Modeling & Mapping
+**Goal:** Translate data into space metaphor.
+
+**Tasks:**
+- Define mapping rules:
+  - Language → galaxy
+  - Repository → star
+  - Fork → planet
+- Encode attributes:
+  - Star size = star count
+  - Brightness = trending activity
+  - Position = language age
+  - State = staleness (active → black hole)
+- Compute spatial coordinates
+  
+**Output:**
+- Data model for rendering (scene-ready objects)
+  
+**Dependencies:** WP1 (conceptual design is independent)
+
+### WP3 - 3D Scene & Rendering
+**Goal:** Build the visual universe.
+
+**Tasks:**
+- Render galaxies, stars, planets
+- Implement visual encodings (size, color, brightness)
+- Add shaders ortextures
+  
+**Outputs:**
+- Render 3D universe
+  
+**Dependencies:** WP2 (basic setup can start earlier)
+
+### WP4 - Interaction & Navigation
+**Goal:** Enable user exploration.
+
+**Tasks:** 
+- Orbit controls (zoom, rotate, pan)
+- Object selection (raycasting)
+- Scene navigation logic
+  
+**Output:**
+- Interactive exploration system
+  
+**Dependencies:** WP3
+
+### WP5 - Information Interface 
+**Goal:** Display repository details.
+
+**Tasks:**
+- Design info panels (HTML/CSS overlay)
+- Show metadata:
+  - Name, description
+  - Stars, forks
+  - Language, history
+- Apply color coding (activity levels)
+  
+**Output:**
+- Contextual information UI
+  
+**Dependencies:** WP4 (UI design can start earlier)
+
+### WP7 - Narrative & Storytelling
+**Goal:** Add guided exploration and storytelling.
+
+**Tasks:**
+- Define narrative path (outer → inner universe)
+- Implement guided tour mode
+- Generate textual summaries (LLM)
+- Optional: voice narration 
+  
+**Outputs:**
+- Narrative experience
+  
+**Dependencies:** WP5
+
+### WP8 - Visual Enhancements & Effects (Optional)
+**Goal:** Improve immersion.
+
+**Tasks:**
+- Procedural textures for stars/planets
+- Orbital animations
+- Supernova effects (trending spikes)
+- Ambient background (optional audio)
+  
+**Outputs:** 
+- Enhanced visual quality
+  
+**Dependencies:** WP3
+
+### WP9 - Documentation
+**Goal:** Complete documentation of the project.
+
+**Tasks:**
+- Describe system architecture and design decisions
+- Document data pipeline and preprocessing steps
+- Explain data-to-space mapping and visual encodings
+- Describe interaction design and user interface
+- Document implementation details (Three.js, APIs, libraries)
+- Summarize narrative concept and storytelling approach
+- Provide setup and usage instructions
+
+**Outputs:**
+- Final written report (project documentation)
+- Technical documentation (code structure, components)
+
+**Dependencies:** All previous WPs (report can be done partially)
+
   
 ## Time plan  
 Describe the schedule of your project, for example, through a Gantt chart of your previously described work packages or components.  
