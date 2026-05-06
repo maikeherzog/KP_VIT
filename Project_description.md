@@ -82,8 +82,20 @@ The following requirements are categorized using the MoSCoW method [^7].
 ## Structure  
 The project is divided into modular work packages (WPs) that reflect the main system components: data processing, 3D visualization, interaction, narrative layer.
 
+### WP0 - Literature Review & Catalogue Preparation
+**Goal:** 
+
+**Outputs:** 
+- Brief catalogue of current tools for data storytelling
+
+**Tasks:**
+- Research about data storytelling
+- Provide catalogue with tool name, uses, domain, interaction, technology, design, goal, shortcomings and link
+
+**Dependencies:** none
+
 ### WP1 - Data Acquisition & Preprocessing
-**Goal:** Prepare the Dataset for usage.
+**Goal:** Prepare the dataset for usage
 
 **Tasks:**
 - Load dataset from Hugging Face (github-top-projects)
@@ -96,19 +108,19 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 **Dependencies:** none
 
 ### WP2 - Data Modeling & Mapping
-**Goal:** Translate data into space metaphor.
+**Goal:** Translate data into space metaphor
 
 **Tasks:**
-- Define mapping rules:
+- Definitions for mapping rules:
   - Language → galaxy
   - Repository → star
   - Fork → planet
-- Encode attributes:
+- Encoding of attributes:
   - Star size = star count
   - Brightness = trending activity
   - Position = language age
   - State = staleness (active → black hole)
-- Compute spatial coordinates
+- Computation of spatial coordinates
   
 **Output:**
 - Data model for rendering (scene-ready objects)
@@ -116,20 +128,20 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 **Dependencies:** WP1 (conceptual design is independent)
 
 ### WP3 - 3D Scene & Rendering
-**Goal:** Build the visual universe.
+**Goal:** Build the visual universe
 
 **Tasks:**
-- Render galaxies, stars, planets
-- Implement visual encodings (size, color, brightness)
-- Add shaders ortextures
+- Rendering of galaxies, stars, planets
+- Implementation of visual encodings (size, color, brightness)
+- Addition of shaders or textures
   
 **Outputs:**
-- Render 3D universe
+- Rendered 3D universe
   
 **Dependencies:** WP2 (basic setup can start earlier)
 
 ### WP4 - Interaction & Navigation
-**Goal:** Enable user exploration.
+**Goal:** Enable user exploration
 
 **Tasks:** 
 - Orbit controls (zoom, rotate, pan)
@@ -142,7 +154,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 **Dependencies:** WP3
 
 ### WP5 - Information Interface 
-**Goal:** Display repository details.
+**Goal:** Display repository details
 
 **Tasks:**
 - Design info panels (HTML/CSS overlay)
@@ -153,12 +165,12 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 - Apply color coding (activity levels)
   
 **Output:**
-- Contextual information UI
+- UI with contextual information
   
 **Dependencies:** WP4 (UI design can start earlier)
 
 ### WP6 - Narrative & Storytelling
-**Goal:** Add guided exploration and storytelling.
+**Goal:** Guided exploration and storytelling
 
 **Tasks:**
 - Define narrative path (outer → inner universe)
@@ -172,7 +184,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 **Dependencies:** WP5
 
 ### WP7 - Visual Enhancements & Effects (Optional)
-**Goal:** Improve immersion.
+**Goal:** Improved immersion
 
 **Tasks:**
 - Procedural textures for stars/planets
@@ -186,7 +198,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 **Dependencies:** WP3
 
 ### WP8 - Documentation
-**Goal:** Complete documentation of the project.
+**Goal:** Complete documentation of the project
 
 **Tasks:**
 - Describe system architecture and design decisions
@@ -205,7 +217,7 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 
   
 ## Time plan  
-Describe the schedule of your project, for example, through a Gantt chart of your previously described work packages or components.  
+Generally the project is divided into three main components: preparation, implementation, and documentation. Those will be worked on in a parallel manner. A more concrete time plan within these components is based on the work packages. 
   
 ## Work distribution  
 Describe the distribution of your work among your team members. Keep in mind that everyone should participate in the different phases described in the task slides.  
