@@ -5,7 +5,7 @@ FastAPI Backend
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.routers import repositories, languages, narration
+from api.routers import repositories, languages
 
 app = FastAPI(
     title="Habitable Worlds API",
@@ -28,8 +28,6 @@ app.add_middleware(
 # Routers                                                            
 app.include_router(repositories.router, prefix="/repos",     tags=["Repositories"])
 app.include_router(languages.router,    prefix="/languages", tags=["Languages / Galaxies"])
-app.include_router(narration.router,    prefix="/narration", tags=["AI Narration"])
-
 
 @app.get("/health", tags=["Meta"])
 def health():
