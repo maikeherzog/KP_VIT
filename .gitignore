@@ -37,6 +37,7 @@ backend/data/universe.db
 # Raw Data
 backend/data/raw_trending.csv
 backend/data/github-top-projects-data-full.csv
+backend/data/programming_languages_data.csv
 
 # Python compiled files
 **/__pycache__/
