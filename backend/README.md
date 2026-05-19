@@ -2,67 +2,32 @@
 
 Python + FastAPI backend for the "Search for Habitable Worlds" 3D storytelling app.
 
-## Setup
+## Setup with database
 
 ```bash
 cd backend
+git lfs pull # to get the database
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-## Data Pipeline (run once)
-
-### Step 1 — Import HuggingFace dataset
-
-**Option A** — Download automatically:
-```bash
-python scripts/01_import_huggingface.py --hf
-```
-
-**Option B** — Use a local CSV:
-```bash
-python scripts/01_import_huggingface.py --csv /path/to/github-top-projects.csv
-```
-
-### Step 2 — Enrich via GitHub API
-
-```bash
-export GITHUB_TOKEN=ghp_your_token_here   # get one at github.com/settings/tokens
-python scripts/02_enrich_github.py
-```
-
-This will take ~2–3 hours for the full dataset (rate limit: 5 000 req/h).
-You can interrupt and resume — already-enriched repos are skipped.
-
-To test with a small batch first:
-```bash
-python scripts/02_enrich_github.py --limit 100
-```
-
-### Step 3 — Compute habitability scores
-
-```bash
-python scripts/03_compute_scores.py
-```
-
-Runs in < 1 minute locally.
-
-## Start the API Server
-
-```bash
 uvicorn api.main:app --reload --port 8000
 ```
-
-- Swagger UI: http://localhost:8000/docs
-- Health check: http://localhost:8000/health
+You can find the API at http://localhost:8000/docs
 
 
-## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GITHUB_TOKEN` | Recommended | GitHub PAT for enrichment (5k req/h vs 60) otherwise slower |
+## Data Pipeline (run once) --> It doesn't matter unless you want to set up the database from scratch again.
+
+- Download datasets from huggingface and save them under backend/data
+- Run the following steps:
+  ´´´bash
+    export GITHUB_TOKEN=ghp_your_token_here   # get one at github.com/settings/tokens
+    python database.py
+    python scripts/00_import_languages.py --csv data/programming_languages_data.csv
+    python scripts/01_import_huggingface.py --csv data/github-top-projects-data-full.csv
+    python scripts/02_enrich_github.py        # ~3 Stunden
+    python scripts/03_compute_scores.py
+  ´´´
 
 
 ## Habitability Score Model
