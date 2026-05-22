@@ -20,14 +20,15 @@ You can find the API at http://localhost:8000/docs
 
 - Download datasets from huggingface and save them under backend/data
 - Run the following steps:
-  ´´´bash
-    export GITHUB_TOKEN=ghp_your_token_here   # get one at github.com/settings/tokens
-    python database.py
-    python scripts/00_import_languages.py --csv data/programming_languages_data.csv
-    python scripts/01_import_huggingface.py --csv data/github-top-projects-data-full.csv
-    python scripts/02_enrich_github.py        # ~3 Stunden
-    python scripts/03_compute_scores.py
-  ´´´
+  
+```bash
+  export GITHUB_TOKEN=ghp_your_token_here   # get one at github.com/settings/tokens
+  python database.py
+  python scripts/00_import_languages.py --csv data/programming_languages_data.csv
+  python scripts/01_import_huggingface.py --csv data/github-top-projects-data-full.csv
+  python scripts/02_enrich_github.py        # ~3 Stunden
+  python scripts/03_compute_scores.py
+```
 
 
 ## Habitability Score Model
