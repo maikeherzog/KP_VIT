@@ -1,10 +1,7 @@
-import ModelViewer from './components/modelViewer';
+import Scene from './components/Scene'
 
 const App = () => {
-    return (
-        <main>
-        <ModelViewer/>
-        </main>
-    )
+  return <Scene />
 }
+
 export default App
