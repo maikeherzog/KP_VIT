@@ -46,3 +46,20 @@ Star type classification:
 - `red_giant` → score 0.3–0.6, formerly popular
 - `white_dwarf` → score 0.1–0.3
 - `black_hole` → archived OR score < 0.1
+
+
+## setup with LLM
+- Download ollama 
+- Download deepseek-coder:6.7b and llama3.2:1b models using ollama:
+   - open command prompt and write:
+     - ```ollama pull deepseek-coder:6.7b```
+     - ```ollama pull llama3.2:1b```
+- Run deepseek-coder:6.7b and llama3.2:1b models:
+   - open command prompt and write:
+     - ```ollama run deepseek-coder:6.7b```
+     - ```ollama run llama3.2:1b```
+- Run the LLM server:
+  - ```py server.py```
+- Run the website
+  - ```npm run dev```
+- Ask the LLM about the dataset in the chatbox, for example: "give me the number of stars for the repo netdata"    
