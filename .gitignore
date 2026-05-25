@@ -22,3 +22,24 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/api/__pycache__/
+backend/api/routers/__pycache__/
+backend/scripts/__pycache__/
+
+# Database 
+backend/data/universe.db
+
+# Raw Data
+backend/data/raw_trending.csv
+backend/data/github-top-projects-data-full.csv
+backend/data/programming_languages_data.csv
+
+# Python compiled files
+**/__pycache__/
+**/*.pyc
+**/*.pyo
