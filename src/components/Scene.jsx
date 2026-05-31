@@ -42,7 +42,7 @@ export default function Scene() {
           camera={{ position: [0, 10, 22], fov: 55, near: 0.1, far: 500 }}
           gl={{ antialias: true }}
         >
-          <ambientLight intensity={0.06} />
+          <ambientLight intensity={0.35} />
           <Stars radius={120} depth={60} count={6000} factor={4} saturation={0} fade speed={0.6} />
 
           <Sun />
