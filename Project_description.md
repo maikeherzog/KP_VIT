@@ -249,7 +249,9 @@ The project duration spans from 07.05.2026 to 21.07.2026. The work is divided in
 - Final code cleanup and polishing
 - Prepare presentation
 
-The following chart shows an overview of the time periods each phase is planned to up. 
+The following chart shows an overview of the time periods each phase is planned to take up.
+
+<img src="images/gantt chart.drawio.svg">
   
 ## Work distribution
 
