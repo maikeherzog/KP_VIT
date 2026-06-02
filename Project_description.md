@@ -282,6 +282,13 @@ Similar to the universe view, the user can select a sun or star by clicking with
 
 In this view, the selected repository will be displayed as a sun or star in the middle of a solar system (1), having important forks or sub projects orbiting around them (2). Similar to the other two views, the user can move around the space via controlling the spaceship (3) and/or clicking on specific forks/projects. Upon clicking, a dialogue window will open, just like in the other views explained above. 
 
+## Current implementation state
+### Data
+For the data, we first downloaded a dataset from hugging Face as a CSV file format. Then we imported it into a SQLite database to provide a structures, queryable foundation for the data. Because we needed additional information like the primary programming language and the repository description we enriched the existing data using the GitHub API. We supplement each record with the additional data. 
+To make the data in the database easily accessible and usable we developed a REST API with multiple endpoints. Each endpoint serves a specific purpose. To the whole API can easiliy be added new endpoints.
+
+### Literature Research
+For the catalogue, we started by reading several papers and collecting them in an Excel spreadsheet. We summarised the content of the different papers by filling in the columns of the table. The columns are: Use case, domain, interaction, used technologies, goal and shortcomings. Currently, we have completed half of our literature research goal.
   
 ## Work distribution
 
