@@ -287,11 +287,23 @@ In this view, the selected repository will be displayed as a sun or star in the 
 For the data, we first downloaded a dataset from hugging Face as a CSV file format. Then we imported it into a SQLite database to provide a structures, queryable foundation for the data. Because we needed additional information like the primary programming language and the repository description we enriched the existing data using the GitHub API. We supplement each record with the additional data. 
 To make the data in the database easily accessible and usable we developed a REST API with multiple endpoints. Each endpoint serves a specific purpose. To the whole API can easiliy be added new endpoints.
 
-## Frontend
+### Frontend
 We have already implemented the spaceship and a base frame of the solar system for the frontend. The spaceship can be controlled using the mouse. You can board and steer the ship.
 
 ### Literature Research
 For the catalogue, we started by reading several papers and collecting them in an Excel spreadsheet. We summarised the content of the different papers by filling in the columns of the table. The columns are: Use case, domain, interaction, used technologies, goal and shortcomings. Currently, we have completed half of our literature research goal.
+
+### LLM Intergration
+- Currently we are using gemma2:9b to analyse the user question, generate sql query and summerise the data retrieved from the database in a storytelling manner. 
+- The user communicate with the LLM using a chatBox
+
+### Chatbox
+
+![Chatbox](images/chatbox.png)
+
+### Generated prompt
+
+![Generated prompt](images/prompt.png)
   
 ## Work distribution
 
