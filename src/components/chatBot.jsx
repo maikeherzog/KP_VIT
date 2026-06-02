@@ -118,7 +118,7 @@ const Chat = () => {
                             items-center
                         "
                     >
-                        <span>AI Assistant</span>
+                        <span>Storyteller AI</span>
 
                         <button
                             onClick={() => setIsOpen(false)}

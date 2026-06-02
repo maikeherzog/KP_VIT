@@ -65,7 +65,11 @@ SQL:"""
         # Step 1: Generate SQL with llama3.2:1b
         sql_response = requests.post(
             "http://localhost:11434/api/generate",
+<<<<<<< HEAD
             json={"model": "llama3.2:1b", "prompt": sql_prompt, "stream": False}
+=======
+            json={"model": "gemma2:9b", "prompt": sql_prompt, "stream": False}
+>>>>>>> cae155d (switching to gemma2:9b llm model)
         )
         sql_query = sql_response.json().get("response", "").strip()
         print("Generated SQL:", sql_query)
@@ -83,10 +87,10 @@ SQL:"""
 
         print("Query results:", context)
 
-        # Step 3: Answer naturally with llama3.2:1b
-        answer_prompt = f"""Answer the user's question using ONLY the data provided below.
-Do not say you lack access to databases. The data has already been retrieved for you.
-Give a short, direct answer in one or two sentences.
+        # Step 3: Answer naturally with gemma2:9b
+        answer_prompt = f"""You are a storey teller. Answer the user's question using ONLY the data provided below in storytelling manner. Answer in no more than 10 lines using only the provided info.
+        Talk about stars number, number of forks, number of watchers number of opened_issues.
+
 
 Data: {context}
 
@@ -95,7 +99,7 @@ Answer:"""
 
         answer_response = requests.post(
             "http://localhost:11434/api/generate",
-            json={"model": "llama3.2:1b", "prompt": answer_prompt, "stream": False}
+            json={"model": "gemma2:9b", "prompt": answer_prompt, "stream": False}
         )
 
         reply = answer_response.json().get("response", "No response from model")
