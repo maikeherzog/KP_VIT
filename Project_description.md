@@ -220,34 +220,36 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 
 The project duration spans from 07.05.2026 to 21.07.2026. The work is divided into structured phases to ensure steady progress and timely delivery.
 
-### Phase 1: Planning & Research (07.05 – 14.05)
+### Phase 1: Planning & Research
 - Finalize project idea and scope
 - Review related work, datasets, and tools
 - Define system architecture and requirements
 
-### Phase 2: Design (15.05 – 25.05)
+### Phase 2: Design
 - Design system components and workflows
 - Define data structures and interfaces
 - Create initial UI/UX sketches
 
-### Phase 3: Core Implementation (26.05 – 20.06)
+### Phase 3: Core Implementation
 - Develop main functionalities
 - Implement core algorithms
 - Integrate basic system components
 
-### Phase 4: Integration & Advanced Features (21.06 – 05.07)
+### Phase 4: Integration & Advanced Features
 - Combine all modules into a working system
 - Add optional and advanced features
 - Improve performance and usability
 
-### Phase 5: Testing & Debugging (06.07 – 14.07)
+### Phase 5: Testing & Debugging
 - Perform functional testing
 - Fix bugs and optimize system behavior
 - Validate results against requirements
-### Phase 6: Finalization & Submission (15.07 – 21.07)
+### Phase 6: Finalization & Submission
 - Prepare documentation and report
 - Final code cleanup and polishing
 - Prepare presentation
+
+The following chart shows an overview of the time periods each phase is planned to up. 
   
 ## Work distribution
 
