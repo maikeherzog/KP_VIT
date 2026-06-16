@@ -12,6 +12,8 @@ export default function Planet({
   orbitOffset = 0,
   rotationSpeed = 0.3,
   name,
+  showLabel = true,
+  showOrbit = true,
   onSelect,
   // all extra props (stars, forks, rank, …) forwarded to onSelect
   ...data
@@ -29,11 +31,11 @@ export default function Planet({
 
   return (
     <>
-      <OrbitRing radius={orbitRadius} />
+      {showOrbit && <OrbitRing radius={orbitRadius} />}
       <group ref={groupRef}>
         <mesh
           ref={planetRef}
-          onClick={() => onSelect?.({ name, radius, color, orbitRadius, orbitSpeed, ...data })}
+          onClick={(e) => { e.stopPropagation(); onSelect?.({ name, radius, color, orbitRadius, orbitSpeed, ...data }) }}
         >
           <sphereGeometry args={[radius, 32, 32]} />
           <meshStandardMaterial
@@ -45,7 +47,7 @@ export default function Planet({
           />
         </mesh>
 
-        {name && (
+        {name && showLabel && (
           <Html distanceFactor={12} center style={{ pointerEvents: 'none' }}>
             <span style={{
               color: 'rgba(255,255,255,0.6)',

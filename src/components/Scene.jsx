@@ -1,20 +1,31 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { Stars, OrbitControls, KeyboardControls } from '@react-three/drei'
-import { useState } from 'react'
-import Sun from './Sun'
-import Planet from './Planet'
-import SpaceShip from './models/Optimized'
-import ShipCamera from './ShipCamera'
-import { useGithubDataset, ENCODING_LEGEND } from '../data/useGithubDataset'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import * as THREE from 'three'
+import Universe from './Universe'
+import GalaxyView from './GalaxyView'
+import ShipController from './ShipCamera'
+import SearchBar from './SearchBar'
+import Timeline from './Timeline'
+import { useUniverse } from '../data/useUniverse'
+import { galaxyPosition } from '../data/languages'
+import { narrativeFor } from '../data/narrative'
 
 const CONTROLS = [
-  { name: 'forward',    keys: ['ArrowUp',    'KeyW'] },
-  { name: 'backward',   keys: ['ArrowDown',  'KeyS'] },
-  { name: 'left',       keys: ['ArrowLeft',  'KeyA'] },
-  { name: 'right',      keys: ['ArrowRight', 'KeyD'] },
+  { name: 'forward',   keys: ['ArrowUp',    'KeyW'] },
+  { name: 'backward',  keys: ['ArrowDown',  'KeyS'] },
+  { name: 'left',      keys: ['ArrowLeft',  'KeyA'] },
+  { name: 'right',     keys: ['ArrowRight', 'KeyD'] },
   { name: 'pitchUp',   keys: ['KeyQ'] },
   { name: 'pitchDown', keys: ['KeyE'] },
 ]
+
+const ORIGIN           = new THREE.Vector3(0, 0, 0)
+const UNIVERSE_DEFAULT = new THREE.Vector3(0, 35, 80)
+const GALAXY_DEFAULT   = new THREE.Vector3(0, 32, 78)
+const SHIP_START       = new THREE.Vector3(0, 2, 18)   // matches ShipController spawn
+const SHIP_CHASE       = new THREE.Vector3(0, 4.5, 27) // behind (+Z) and above the ship
+const CURRENT_YEAR     = new Date().getFullYear()
 
 function formatNumber(n) {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
@@ -22,160 +33,285 @@ function formatNumber(n) {
   return String(n)
 }
 
+// Drives the camera during view transitions; exposes an imperative snap().
+const CameraController = forwardRef(function CameraController({ transition }, ref) {
+  const { camera } = useThree()
+  useImperativeHandle(ref, () => ({
+    snap(pos, look) { camera.position.copy(pos); camera.lookAt(look) },
+  }), [camera])
+  useFrame(() => {
+    if (!transition) return
+    camera.position.lerp(transition.target, 0.07)
+    camera.lookAt(transition.look)
+  })
+  return null
+})
+
 export default function Scene() {
+  const { galaxies, loading, usingFallback } = useUniverse()
+
+  const [view,       setView]       = useState('universe') // 'universe' | 'galaxy'
+  const [activeId,   setActiveId]   = useState(null)
   const [selected,   setSelected]   = useState(null)
+  const [flyMode,    setFlyMode]    = useState(false)
   const [showLegend, setShowLegend] = useState(false)
-  const [mode,       setMode]       = useState('overview') // 'overview' | 'fly'
-  const [speed,      setSpeed]      = useState(0)
+  const [transition, setTransition] = useState(null)       // { phase, target, look }
+  const [fade,       setFade]       = useState(0)
+  const [year,       setYear]       = useState(CURRENT_YEAR)
 
-  const { planets, month, loading, error } = useGithubDataset({ topN: 20 })
+  const cameraRef = useRef(null)
+  const controlsRef = useRef(null)
+  const timers = useRef([])
 
-  function toggleMode() {
-    setMode(m => m === 'fly' ? 'overview' : 'fly')
+  const activeGalaxy = useMemo(
+    () => galaxies.find((g) => g.id === activeId) ?? null,
+    [galaxies, activeId],
+  )
+
+  const minYear = useMemo(
+    () => (galaxies.length ? Math.min(...galaxies.map((g) => g.born)) : 1970),
+    [galaxies],
+  )
+
+  // clear pending timeouts on unmount
+  useEffect(() => () => timers.current.forEach(clearTimeout), [])
+  function later(fn, ms) { timers.current.push(setTimeout(fn, ms)) }
+
+  // On boarding the ship, snap to a chase position behind it; on leaving, return
+  // to the current view's overview. (Deliberately only depends on flyMode so it
+  // never fires during the universe↔galaxy cinematic transitions.)
+  useEffect(() => {
+    const c = controlsRef.current
+    if (flyMode) {
+      cameraRef.current?.snap(SHIP_CHASE, SHIP_START)
+      if (c) { c.target.copy(SHIP_START); c.update() }
+    } else {
+      const def = view === 'galaxy' ? GALAXY_DEFAULT : UNIVERSE_DEFAULT
+      cameraRef.current?.snap(def, ORIGIN)
+      if (c) { c.target.copy(ORIGIN); c.update() }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flyMode])
+
+  function enterGalaxy(id, selectAfter = null) {
+    const galaxy = galaxies.find((g) => g.id === id)
+    if (!galaxy) return
+    if (view === 'galaxy' && activeId === id) { if (selectAfter) setSelected(selectAfter); return }
+
+    setFlyMode(false)
+    setSelected(null)
+    // alive galaxies rest at their full position, so fly straight to it
+    const gpos = new THREE.Vector3(...galaxyPosition(galaxy))
+    setTransition({ phase: 'enter', target: gpos.clone().multiplyScalar(0.7), look: gpos })
+
+    later(() => setFade(1), 650)
+    later(() => {
+      setActiveId(id)
+      setView('galaxy')
+      setTransition(null)
+      cameraRef.current?.snap(GALAXY_DEFAULT, ORIGIN)
+      if (selectAfter) setSelected(selectAfter)
+    }, 850)
+    later(() => setFade(0), 1050)
+  }
+
+  function backToUniverse() {
+    const galaxy = activeGalaxy
+    setSelected(null)
+    setFade(1)
+    later(() => {
+      setView('universe')
+      setActiveId(null)
+      const from = galaxy
+        ? new THREE.Vector3(...galaxyPosition(galaxy)).multiplyScalar(0.7)
+        : UNIVERSE_DEFAULT.clone()
+      cameraRef.current?.snap(from, ORIGIN)
+      setTransition({ phase: 'back', target: UNIVERSE_DEFAULT.clone(), look: ORIGIN })
+    }, 220)
+    later(() => setFade(0), 420)
+    later(() => setTransition(null), 1500)
+  }
+
+  function toggleFly() {
+    setFlyMode((v) => !v)
     setSelected(null)
   }
 
+  const spacelog = selected ? narrativeFor(selected, activeGalaxy) : null
+
   return (
     <KeyboardControls map={CONTROLS}>
-      <div className="relative w-screen h-screen bg-black">
+      <div className="relative w-screen h-screen bg-black overflow-hidden">
         <Canvas
-          camera={{ position: [0, 10, 22], fov: 55, near: 0.1, far: 500 }}
+          camera={{ position: [0, 35, 80], fov: 55, near: 0.1, far: 1000 }}
           gl={{ antialias: true }}
         >
-          <ambientLight intensity={0.35} />
-          <Stars radius={120} depth={60} count={6000} factor={4} saturation={0} fade speed={0.6} />
+          <Stars radius={300} depth={120} count={9000} factor={5} saturation={0} fade speed={0.4} />
 
-          <Sun />
+          <CameraController ref={cameraRef} transition={flyMode ? null : transition} />
 
-          {planets.map((p) => (
-            <Planet
-              key={p.id}
-              {...p}
-              onSelect={mode === 'overview' ? setSelected : undefined}
+          {view === 'universe'
+            ? <Universe galaxies={galaxies} onSelectGalaxy={enterGalaxy} year={year} />
+            : activeGalaxy && <GalaxyView galaxy={activeGalaxy} onSelectSystem={setSelected} />
+          }
+
+          {!transition && (
+            <OrbitControls
+              ref={controlsRef}
+              key={view + (flyMode ? '-fly' : '')}
+              makeDefault
+              enablePan={!flyMode}
+              enableZoom
+              enableRotate
+              minDistance={flyMode ? 2 : 5}
+              maxDistance={flyMode ? 80 : view === 'universe' ? 220 : 300}
+              target={flyMode ? undefined : [0, 0, 0]}
             />
-          ))}
-
-          {mode === 'fly' ? (
-            <ShipCamera onSpeedChange={setSpeed} />
-          ) : (
-            <>
-              <SpaceShip
-                scale={0.28}
-                position={[7, 1.5, 10]}
-                rotation={[0.05, -Math.PI * 0.35, 0.04]}
-              />
-              <OrbitControls
-                enablePan
-                enableZoom
-                enableRotate
-                minDistance={3}
-                maxDistance={80}
-                target={[0, 0, 0]}
-              />
-            </>
           )}
+          {flyMode && <ShipController controlsRef={controlsRef} />}
         </Canvas>
 
-        {/* ── HUD top-left ── */}
+        {/* ── Breadcrumb / title ── */}
         <div className="absolute top-4 left-4 font-mono text-white pointer-events-none">
           <div className="text-base font-bold opacity-90">HABITABLE WORLDS</div>
-          {month && (
-            <div className="text-xs opacity-50 mt-0.5">GitHub trending · {month}</div>
-          )}
-          {mode === 'overview' && (
-            <div className="text-xs opacity-40 mt-1">drag · scroll to navigate</div>
-          )}
-          {mode === 'fly' && (
-            <div className="text-xs opacity-60 mt-1 space-y-0.5">
-              <div>WASD / ↑↓←→ · Q/E pitch</div>
-              <div className="opacity-80">
-                {speed < 0.1
-                  ? 'SPEED  —'
-                  : `SPEED  ${speed.toFixed(1)} u/s`}
-              </div>
-            </div>
+          <div className="text-xs opacity-50 mt-0.5">
+            UNIVERSE
+            {activeGalaxy && <span className="opacity-90"> / {activeGalaxy.name}</span>}
+          </div>
+          {flyMode && <div className="text-xs opacity-60 mt-1">WASD / ↑↓←→ · Q/E pitch · drag to look</div>}
+          {!flyMode && view === 'universe' && (
+            <div className="text-xs opacity-40 mt-1">click a galaxy to enter</div>
           )}
         </div>
 
-        {/* ── Board / Exit Ship button ── */}
-        <button
-          className="absolute top-4 left-1/2 -translate-x-1/2 font-mono text-xs border rounded-lg px-4 py-2 transition-colors"
-          style={{
-            color:            mode === 'fly' ? '#f87171' : '#86efac',
-            borderColor:      mode === 'fly' ? '#f87171' : '#86efac',
-            background:       'rgba(0,0,0,0.6)',
-            backdropFilter:   'blur(4px)',
-          }}
-          onClick={toggleMode}
-        >
-          {mode === 'fly' ? '✕  Exit Ship' : '▶  Board Ship'}
-        </button>
+        {/* ── Top-centre controls ── */}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {view === 'galaxy' && !flyMode && (
+            <button
+              className="font-mono text-xs text-white/80 border border-white/30 hover:border-white/70 rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
+              onClick={backToUniverse}
+            >
+              ← Universe
+            </button>
+          )}
+          <button
+            className="font-mono text-xs border rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
+            style={{
+              color:       flyMode ? '#f87171' : '#86efac',
+              borderColor: flyMode ? '#f87171' : '#86efac',
+            }}
+            onClick={toggleFly}
+          >
+            {flyMode ? '✕ Exit Ship' : '▶ Board Ship'}
+          </button>
+        </div>
 
-        {/* ── Legend toggle (hidden in fly mode) ── */}
-        {mode === 'overview' && (
+        {/* ── Legend toggle ── */}
+        {!flyMode && (
           <button
             className="absolute top-4 right-4 font-mono text-xs text-white/50 hover:text-white/90 border border-white/20 hover:border-white/50 rounded-lg px-3 py-1.5 transition-colors"
-            onClick={() => setShowLegend(v => !v)}
+            onClick={() => setShowLegend((v) => !v)}
           >
             {showLegend ? 'hide legend' : 'legend'}
           </button>
         )}
 
         {/* ── Legend panel ── */}
-        {showLegend && mode === 'overview' && (
-          <div className="absolute top-14 right-4 bg-black/70 border border-white/20 rounded-xl px-4 py-3 font-mono text-xs text-white backdrop-blur-sm w-64">
-            <div className="font-bold mb-2 opacity-80">Visual Encoding</div>
-            {ENCODING_LEGEND.map(({ visual, data }) => (
-              <div key={visual} className="grid grid-cols-2 gap-2 mb-1">
-                <span className="opacity-50">{visual}</span>
-                <span className="opacity-80">{data}</span>
+        {showLegend && !flyMode && (
+          <div className="absolute top-14 right-4 bg-black/70 border border-white/20 rounded-xl px-4 py-3 font-mono text-xs text-white backdrop-blur-sm w-72">
+            <div className="font-bold mb-2 opacity-80">
+              {view === 'universe' ? 'Universe — Visual Encoding' : 'Galaxy — Visual Encoding'}
+            </div>
+            {(view === 'universe'
+              ? [
+                  ['Galaxy', 'Programming language'],
+                  ['Distance from centre', 'Language age (older = further)'],
+                  ['Galaxy size', 'Number of repositories'],
+                  ['Colour', 'Language identity'],
+                ]
+              : [
+                  ['Star', 'Repository'],
+                  ['Star size', 'Star count (log)'],
+                  ['Brightness', 'Recent activity'],
+                  ['Warm colour', 'Habitable (actively maintained)'],
+                  ['Planet', 'Notable fork'],
+                ]
+            ).map(([k, v]) => (
+              <div key={k} className="grid grid-cols-2 gap-2 mb-1">
+                <span className="opacity-50">{k}</span>
+                <span className="opacity-80">{v}</span>
               </div>
             ))}
           </div>
         )}
 
+        {/* ── Timeline (universe view only) ── */}
+        {!flyMode && view === 'universe' && !loading && (
+          <Timeline min={minYear} max={CURRENT_YEAR} year={year} onChange={setYear} />
+        )}
+
+        {/* ── Search ── */}
+        {!flyMode && !loading && (
+          <SearchBar
+            galaxies={galaxies}
+            onPickGalaxy={(id) => enterGalaxy(id)}
+            onPickSystem={(gid, system) => enterGalaxy(gid, system)}
+          />
+        )}
+
         {/* ── Loading ── */}
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="font-mono text-white/60 text-sm animate-pulse">
-              scanning repositories…
+            <div className="font-mono text-white/60 text-sm animate-pulse">charting the universe…</div>
+          </div>
+        )}
+
+        {/* ── Fallback notice ── */}
+        {usingFallback && !loading && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-[10px] text-amber-300/60 pointer-events-none">
+            sample data — run <span className="opacity-100">node scripts/enrich.mjs</span> for live data
+          </div>
+        )}
+
+        {/* ── Spacelog (system narrative) ── */}
+        {selected && !flyMode && view === 'galaxy' && (
+          <div className="absolute top-1/2 left-6 -translate-y-1/2 w-80 max-h-[70vh] overflow-auto bg-black/80 border border-white/20 rounded-xl px-5 py-4 font-mono text-white backdrop-blur-sm">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs tracking-widest opacity-50">SPACELOG</span>
+              <button
+                className="text-white/40 hover:text-white/90 text-xs"
+                onClick={() => setSelected(null)}
+              >
+                ✕
+              </button>
             </div>
-          </div>
-        )}
 
-        {/* ── Error ── */}
-        {error && (
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-red-900/70 border border-red-400/40 rounded-xl px-5 py-3 font-mono text-xs text-red-200 backdrop-blur-sm">
-            Failed to load dataset: {error}
-          </div>
-        )}
-
-        {/* ── Planet info panel (overview only) ── */}
-        {selected && !loading && mode === 'overview' && (
-          <div
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/75 border border-white/20 rounded-xl px-6 py-4 font-mono text-sm text-white backdrop-blur-sm cursor-pointer select-none"
-            onClick={() => setSelected(null)}
-          >
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-center gap-2 mb-3">
               <span
                 className="inline-block w-3 h-3 rounded-full flex-shrink-0"
-                style={{ background: selected.color }}
+                style={{ background: selected.habitable ? '#ffd27a' : '#5a7fb5' }}
               />
-              <span className="font-bold text-base">{selected.fullName ?? selected.name}</span>
+              <span className="font-bold text-sm truncate">{selected.fullName}</span>
             </div>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-1 text-xs opacity-80">
-              <span className="opacity-50">rank</span>
-              <span>#{selected.rank}</span>
-              <span className="opacity-50">stars</span>
-              <span>⭐ {formatNumber(selected.stars)}</span>
-              <span className="opacity-50">forks</span>
-              <span>🍴 {formatNumber(selected.forks)}</span>
-              <span className="opacity-50">months in top</span>
-              <span>{selected.appearances}×</span>
+
+            <p className="text-xs leading-relaxed opacity-80 mb-4">{spacelog}</p>
+
+            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[11px] opacity-75 border-t border-white/10 pt-3">
+              <span className="opacity-50">language</span><span>{selected.language ?? '—'}</span>
+              <span className="opacity-50">stars</span><span>⭐ {formatNumber(selected.stars)}</span>
+              <span className="opacity-50">forks</span><span>🍴 {formatNumber(selected.forks)}</span>
+              <span className="opacity-50">activity</span><span>{Math.round(selected.activity * 100)}%</span>
+              <span className="opacity-50">status</span>
+              <span>{selected.habitable ? '🌱 habitable' : '🪐 stale'}</span>
             </div>
-            <div className="mt-3 opacity-30 text-xs">click to dismiss</div>
           </div>
         )}
+
+        {/* ── Transition fade ── */}
+        <div
+          className="absolute inset-0 bg-black pointer-events-none transition-opacity duration-300"
+          style={{ opacity: fade }}
+        />
       </div>
     </KeyboardControls>
   )

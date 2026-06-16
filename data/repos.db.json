@@ -1,0 +1,812 @@
+{
+  "updatedAt": "2026-06-16T22:12:05.593Z",
+  "repos": {
+    "TheAlgorithms/Python": {
+      "id": "TheAlgorithms/Python",
+      "owner": "TheAlgorithms",
+      "name": "Python",
+      "fullName": "TheAlgorithms/Python",
+      "language": "Python",
+      "stars": 222004,
+      "forks": 50765,
+      "activity": 0.979,
+      "habitable": true,
+      "born": 2016,
+      "planets": [],
+      "fetchedAt": "2026-06-16T22:11:33.448Z"
+    },
+    "flutter/flutter": {
+      "id": "flutter/flutter",
+      "owner": "flutter",
+      "name": "flutter",
+      "fullName": "flutter/flutter",
+      "language": "Dart",
+      "stars": 176977,
+      "forks": 30529,
+      "activity": 1,
+      "habitable": true,
+      "born": 2015,
+      "planets": [],
+      "fetchedAt": "2026-06-16T22:11:41.916Z"
+    },
+    "yangshun/tech-interview-handbook": {
+      "id": "yangshun/tech-interview-handbook",
+      "owner": "yangshun",
+      "name": "tech-interview-handbook",
+      "fullName": "yangshun/tech-interview-handbook",
+      "language": "TypeScript",
+      "stars": 140342,
+      "forks": 16628,
+      "activity": 0.901,
+      "habitable": true,
+      "born": 2016,
+      "planets": [
+        {
+          "id": "Mohamed-Hashem/tech-interview-handbook",
+          "name": "tech-interview-handbook",
+          "owner": "Mohamed-Hashem",
+          "stars": 70
+        },
+        {
+          "id": "papamuziko/tech-interview-handbook",
+          "name": "tech-interview-handbook",
+          "owner": "papamuziko",
+          "stars": 53
+        },
+        {
+          "id": "krishabhishek/tech-interview-handbook",
+          "name": "tech-interview-handbook",
+          "owner": "krishabhishek",
+          "stars": 24
+        },
+        {
+          "id": "liquidslr/tech-interview-handbook",
+          "name": "tech-interview-handbook",
+          "owner": "liquidslr",
+          "stars": 22
+        },
+        {
+          "id": "navdiana/tech-interview-handbook",
+          "name": "tech-interview-handbook",
+          "owner": "navdiana",
+          "stars": 15
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:43.258Z"
+    },
+    "iptv-org/iptv": {
+      "id": "iptv-org/iptv",
+      "owner": "iptv-org",
+      "name": "iptv",
+      "fullName": "iptv-org/iptv",
+      "language": "TypeScript",
+      "stars": 123961,
+      "forks": 6689,
+      "activity": 1,
+      "habitable": true,
+      "born": 2018,
+      "planets": [
+        {
+          "id": "rhythm98/iptv-vlc",
+          "name": "iptv-vlc",
+          "owner": "rhythm98",
+          "stars": 9
+        },
+        {
+          "id": "dytv/iptv-org",
+          "name": "iptv-org",
+          "owner": "dytv",
+          "stars": 9
+        },
+        {
+          "id": "deeptesh-rout/iptv",
+          "name": "iptv",
+          "owner": "deeptesh-rout",
+          "stars": 8
+        },
+        {
+          "id": "iamapuneet/iptv",
+          "name": "iptv",
+          "owner": "iamapuneet",
+          "stars": 6
+        },
+        {
+          "id": "Sphinxroot/iptv-1",
+          "name": "iptv-1",
+          "owner": "Sphinxroot",
+          "stars": 6
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:44.023Z"
+    },
+    "x1xhlol/system-prompts-and-models-of-ai-tools": {
+      "id": "x1xhlol/system-prompts-and-models-of-ai-tools",
+      "owner": "x1xhlol",
+      "name": "system-prompts-and-models-of-ai-tools",
+      "fullName": "x1xhlol/system-prompts-and-models-of-ai-tools",
+      "language": null,
+      "stars": 140673,
+      "forks": 34701,
+      "activity": 0.994,
+      "habitable": true,
+      "born": 2025,
+      "planets": [],
+      "fetchedAt": "2026-06-16T22:11:52.457Z"
+    },
+    "puppeteer/puppeteer": {
+      "id": "puppeteer/puppeteer",
+      "owner": "puppeteer",
+      "name": "puppeteer",
+      "fullName": "puppeteer/puppeteer",
+      "language": "TypeScript",
+      "stars": 94859,
+      "forks": 9449,
+      "activity": 0.998,
+      "habitable": true,
+      "born": 2017,
+      "planets": [
+        {
+          "id": "linus/puppeteer",
+          "name": "puppeteer",
+          "owner": "linus",
+          "stars": 79
+        },
+        {
+          "id": "michaelshiel/puppeteer",
+          "name": "puppeteer",
+          "owner": "michaelshiel",
+          "stars": 15
+        },
+        {
+          "id": "doyen001/puppeteer",
+          "name": "puppeteer",
+          "owner": "doyen001",
+          "stars": 12
+        },
+        {
+          "id": "satya-nutella/puppeteer",
+          "name": "puppeteer",
+          "owner": "satya-nutella",
+          "stars": 8
+        },
+        {
+          "id": "deeptesh-rout/puppeteer",
+          "name": "puppeteer",
+          "owner": "deeptesh-rout",
+          "stars": 8
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:53.420Z"
+    },
+    "nvm-sh/nvm": {
+      "id": "nvm-sh/nvm",
+      "owner": "nvm-sh",
+      "name": "nvm",
+      "fullName": "nvm-sh/nvm",
+      "language": "Shell",
+      "stars": 93826,
+      "forks": 10226,
+      "activity": 0.998,
+      "habitable": true,
+      "born": 2010,
+      "planets": [
+        {
+          "id": "kaiinkinen/pvm",
+          "name": "pvm",
+          "owner": "kaiinkinen",
+          "stars": 98
+        },
+        {
+          "id": "cnpm/nvm",
+          "name": "nvm",
+          "owner": "cnpm",
+          "stars": 96
+        },
+        {
+          "id": "moekyawaung-china/nvm",
+          "name": "nvm",
+          "owner": "moekyawaung-china",
+          "stars": 13
+        },
+        {
+          "id": "isaacs/nvm",
+          "name": "nvm",
+          "owner": "isaacs",
+          "stars": 10
+        },
+        {
+          "id": "rummik/nvm-zsh",
+          "name": "nvm-zsh",
+          "owner": "rummik",
+          "stars": 10
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:54.429Z"
+    },
+    "gin-gonic/gin": {
+      "id": "gin-gonic/gin",
+      "owner": "gin-gonic",
+      "name": "gin",
+      "fullName": "gin-gonic/gin",
+      "language": "Go",
+      "stars": 88695,
+      "forks": 8638,
+      "activity": 0.989,
+      "habitable": true,
+      "born": 2014,
+      "planets": [
+        {
+          "id": "kelly90000/gin",
+          "name": "gin",
+          "owner": "kelly90000",
+          "stars": 13
+        },
+        {
+          "id": "GocaMaric/gin",
+          "name": "gin",
+          "owner": "GocaMaric",
+          "stars": 7
+        },
+        {
+          "id": "go-gin/gin",
+          "name": "gin",
+          "owner": "go-gin",
+          "stars": 6
+        },
+        {
+          "id": "karldoenitz/gin",
+          "name": "gin",
+          "owner": "karldoenitz",
+          "stars": 6
+        },
+        {
+          "id": "bdsazzad3/gin",
+          "name": "gin",
+          "owner": "bdsazzad3",
+          "stars": 4
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:54.908Z"
+    },
+    "microsoft/markitdown": {
+      "id": "microsoft/markitdown",
+      "owner": "microsoft",
+      "name": "markitdown",
+      "fullName": "microsoft/markitdown",
+      "language": "Python",
+      "stars": 154638,
+      "forks": 10710,
+      "activity": 0.971,
+      "habitable": true,
+      "born": 2024,
+      "planets": [
+        {
+          "id": "managedcode/markitdown",
+          "name": "markitdown",
+          "owner": "managedcode",
+          "stars": 73
+        },
+        {
+          "id": "InflixOP/markitdown",
+          "name": "markitdown",
+          "owner": "InflixOP",
+          "stars": 8
+        },
+        {
+          "id": "RapidsPackerCount/markitdown",
+          "name": "markitdown",
+          "owner": "RapidsPackerCount",
+          "stars": 6
+        },
+        {
+          "id": "simonw/markitdown",
+          "name": "markitdown",
+          "owner": "simonw",
+          "stars": 6
+        },
+        {
+          "id": "Soulter/markitdown",
+          "name": "markitdown",
+          "owner": "Soulter",
+          "stars": 6
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:55.864Z"
+    },
+    "nomic-ai/gpt4all": {
+      "id": "nomic-ai/gpt4all",
+      "owner": "nomic-ai",
+      "name": "gpt4all",
+      "fullName": "nomic-ai/gpt4all",
+      "language": "C++",
+      "stars": 77376,
+      "forks": 8317,
+      "activity": 0.472,
+      "habitable": false,
+      "born": 2023,
+      "planets": [
+        {
+          "id": "0xSojalSec/Run-Local-LLMs-on-Any-Device",
+          "name": "Run-Local-LLMs-on-Any-Device",
+          "owner": "0xSojalSec",
+          "stars": 53
+        },
+        {
+          "id": "Galalex1/gpt4all",
+          "name": "gpt4all",
+          "owner": "Galalex1",
+          "stars": 33
+        },
+        {
+          "id": "Gena199313/gpt4all",
+          "name": "gpt4all",
+          "owner": "Gena199313",
+          "stars": 21
+        },
+        {
+          "id": "last-suns3t/gpt4all",
+          "name": "gpt4all",
+          "owner": "last-suns3t",
+          "stars": 19
+        },
+        {
+          "id": "noteligble/gpt4all",
+          "name": "gpt4all",
+          "owner": "noteligble",
+          "stars": 18
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:56.585Z"
+    },
+    "Shubhamsaboo/awesome-llm-apps": {
+      "id": "Shubhamsaboo/awesome-llm-apps",
+      "owner": "Shubhamsaboo",
+      "name": "awesome-llm-apps",
+      "fullName": "Shubhamsaboo/awesome-llm-apps",
+      "language": "Python",
+      "stars": 114758,
+      "forks": 17025,
+      "activity": 0.997,
+      "habitable": true,
+      "born": 2024,
+      "planets": [
+        {
+          "id": "blurred-machine/awesome-llm-apps",
+          "name": "awesome-llm-apps",
+          "owner": "blurred-machine",
+          "stars": 365
+        },
+        {
+          "id": "0xSojalSec/awesome-llm-apps",
+          "name": "awesome-llm-apps",
+          "owner": "0xSojalSec",
+          "stars": 93
+        },
+        {
+          "id": "asimov-academy/ia-projects-example",
+          "name": "ia-projects-example",
+          "owner": "asimov-academy",
+          "stars": 90
+        },
+        {
+          "id": "HeyNina101/real-world-llm-agents",
+          "name": "real-world-llm-agents",
+          "owner": "HeyNina101",
+          "stars": 77
+        },
+        {
+          "id": "peteryxu/Shubham-awesome-llm-apps",
+          "name": "Shubham-awesome-llm-apps",
+          "owner": "peteryxu",
+          "stars": 38
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:57.627Z"
+    },
+    "rasbt/LLMs-from-scratch": {
+      "id": "rasbt/LLMs-from-scratch",
+      "owner": "rasbt",
+      "name": "LLMs-from-scratch",
+      "fullName": "rasbt/LLMs-from-scratch",
+      "language": "Jupyter Notebook",
+      "stars": 97265,
+      "forks": 14878,
+      "activity": 0.98,
+      "habitable": true,
+      "born": 2023,
+      "planets": [
+        {
+          "id": "henrythe9th/LLMs-from-scratch",
+          "name": "LLMs-from-scratch",
+          "owner": "henrythe9th",
+          "stars": 24
+        },
+        {
+          "id": "codewithsadaf/LLMs-from-scratch",
+          "name": "LLMs-from-scratch",
+          "owner": "codewithsadaf",
+          "stars": 22
+        },
+        {
+          "id": "leek2654/LLMs-from-scratch",
+          "name": "LLMs-from-scratch",
+          "owner": "leek2654",
+          "stars": 18
+        },
+        {
+          "id": "Shubhamsaboo/LLMs-from-scratch",
+          "name": "LLMs-from-scratch",
+          "owner": "Shubhamsaboo",
+          "stars": 18
+        },
+        {
+          "id": "charlotteye835/LLMs-from-scratch",
+          "name": "LLMs-from-scratch",
+          "owner": "charlotteye835",
+          "stars": 16
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:58.794Z"
+    },
+    "Stirling-Tools/Stirling-PDF": {
+      "id": "Stirling-Tools/Stirling-PDF",
+      "owner": "Stirling-Tools",
+      "name": "Stirling-PDF",
+      "fullName": "Stirling-Tools/Stirling-PDF",
+      "language": "Java",
+      "stars": 81134,
+      "forks": 7121,
+      "activity": 1,
+      "habitable": true,
+      "born": 2023,
+      "planets": [
+        {
+          "id": "1harios/Stirling-PDF",
+          "name": "Stirling-PDF",
+          "owner": "1harios",
+          "stars": 8
+        },
+        {
+          "id": "bragaus/Stirling-PDF",
+          "name": "Stirling-PDF",
+          "owner": "bragaus",
+          "stars": 8
+        },
+        {
+          "id": "noah-nuebling/Stirling-PDF",
+          "name": "Stirling-PDF",
+          "owner": "noah-nuebling",
+          "stars": 4
+        },
+        {
+          "id": "parvin528/Stirling-PDF",
+          "name": "Stirling-PDF",
+          "owner": "parvin528",
+          "stars": 4
+        },
+        {
+          "id": "Frooodle/Stirling-PDF2",
+          "name": "Stirling-PDF2",
+          "owner": "Frooodle",
+          "stars": 4
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:11:59.688Z"
+    },
+    "twitter/the-algorithm": {
+      "id": "twitter/the-algorithm",
+      "owner": "twitter",
+      "name": "the-algorithm",
+      "fullName": "twitter/the-algorithm",
+      "language": "Scala",
+      "stars": 73425,
+      "forks": 13278,
+      "activity": 0.615,
+      "habitable": true,
+      "born": 2023,
+      "planets": [
+        {
+          "id": "AlpacaLayer2/the-algorithm",
+          "name": "the-algorithm",
+          "owner": "AlpacaLayer2",
+          "stars": 47
+        },
+        {
+          "id": "CryptoMonkey21/the-algorithm",
+          "name": "the-algorithm",
+          "owner": "CryptoMonkey21",
+          "stars": 28
+        },
+        {
+          "id": "nirholas/the-algorithm",
+          "name": "the-algorithm",
+          "owner": "nirholas",
+          "stars": 20
+        },
+        {
+          "id": "takanotaiga/the-algorithm",
+          "name": "the-algorithm",
+          "owner": "takanotaiga",
+          "stars": 19
+        },
+        {
+          "id": "7ttp/the-algorithm",
+          "name": "the-algorithm",
+          "owner": "7ttp",
+          "stars": 14
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:00.743Z"
+    },
+    "TapXWorld/ChinaTextbook": {
+      "id": "TapXWorld/ChinaTextbook",
+      "owner": "TapXWorld",
+      "name": "ChinaTextbook",
+      "fullName": "TapXWorld/ChinaTextbook",
+      "language": "Roff",
+      "stars": 74285,
+      "forks": 16625,
+      "activity": 0.669,
+      "habitable": true,
+      "born": 2020,
+      "planets": [
+        {
+          "id": "Chiowe/ChinaTextbook-",
+          "name": "ChinaTextbook-",
+          "owner": "Chiowe",
+          "stars": 370
+        },
+        {
+          "id": "iheng/chinatextbook",
+          "name": "chinatextbook",
+          "owner": "iheng",
+          "stars": 55
+        },
+        {
+          "id": "zixing131/ChinaTextbook",
+          "name": "ChinaTextbook",
+          "owner": "zixing131",
+          "stars": 22
+        },
+        {
+          "id": "artisdom/ChinaTextbook",
+          "name": "ChinaTextbook",
+          "owner": "artisdom",
+          "stars": 16
+        },
+        {
+          "id": "djun/ChinaTextbook",
+          "name": "ChinaTextbook",
+          "owner": "djun",
+          "stars": 9
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:01.952Z"
+    },
+    "traefik/traefik": {
+      "id": "traefik/traefik",
+      "owner": "traefik",
+      "name": "traefik",
+      "fullName": "traefik/traefik",
+      "language": "Go",
+      "stars": 63648,
+      "forks": 6044,
+      "activity": 0.999,
+      "habitable": true,
+      "born": 2015,
+      "planets": [
+        {
+          "id": "emilevauge/traefik",
+          "name": "traefik",
+          "owner": "emilevauge",
+          "stars": 10
+        },
+        {
+          "id": "tarxemo/traefik",
+          "name": "traefik",
+          "owner": "tarxemo",
+          "stars": 6
+        },
+        {
+          "id": "riduwan45/traefik",
+          "name": "traefik",
+          "owner": "riduwan45",
+          "stars": 5
+        },
+        {
+          "id": "Roblox/traefik",
+          "name": "traefik",
+          "owner": "Roblox",
+          "stars": 4
+        },
+        {
+          "id": "parvin528/traefik",
+          "name": "traefik",
+          "owner": "parvin528",
+          "stars": 4
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:02.677Z"
+    },
+    "LadybirdBrowser/ladybird": {
+      "id": "LadybirdBrowser/ladybird",
+      "owner": "LadybirdBrowser",
+      "name": "ladybird",
+      "fullName": "LadybirdBrowser/ladybird",
+      "language": "C++",
+      "stars": 64130,
+      "forks": 3073,
+      "activity": 1,
+      "habitable": true,
+      "born": 2024,
+      "planets": [
+        {
+          "id": "awesomekling/ladybird",
+          "name": "ladybird",
+          "owner": "awesomekling",
+          "stars": 41
+        },
+        {
+          "id": "tindrew/Freebird",
+          "name": "Freebird",
+          "owner": "tindrew",
+          "stars": 15
+        },
+        {
+          "id": "pkgdemon/ladybird",
+          "name": "ladybird",
+          "owner": "pkgdemon",
+          "stars": 5
+        },
+        {
+          "id": "bentrnr21/ladybird",
+          "name": "ladybird",
+          "owner": "bentrnr21",
+          "stars": 5
+        },
+        {
+          "id": "bajrangCoder/ladybird",
+          "name": "ladybird",
+          "owner": "bajrangCoder",
+          "stars": 4
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:03.302Z"
+    },
+    "PowerShell/PowerShell": {
+      "id": "PowerShell/PowerShell",
+      "owner": "PowerShell",
+      "name": "PowerShell",
+      "fullName": "PowerShell/PowerShell",
+      "language": "C#",
+      "stars": 53948,
+      "forks": 8355,
+      "activity": 1,
+      "habitable": true,
+      "born": 2016,
+      "planets": [
+        {
+          "id": "cobbr/InsecurePowerShell",
+          "name": "InsecurePowerShell",
+          "owner": "cobbr",
+          "stars": 106
+        },
+        {
+          "id": "e-fin/OpenPsPipeJack",
+          "name": "OpenPsPipeJack",
+          "owner": "e-fin",
+          "stars": 24
+        },
+        {
+          "id": "daxian-dbw/PowerShell",
+          "name": "PowerShell",
+          "owner": "daxian-dbw",
+          "stars": 19
+        },
+        {
+          "id": "DogSoulDev/PowerShell",
+          "name": "PowerShell",
+          "owner": "DogSoulDev",
+          "stars": 14
+        },
+        {
+          "id": "jshigetomi/PowerShell",
+          "name": "PowerShell",
+          "owner": "jshigetomi",
+          "stars": 10
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:04.187Z"
+    },
+    "pathwaycom/pathway": {
+      "id": "pathwaycom/pathway",
+      "owner": "pathwaycom",
+      "name": "pathway",
+      "fullName": "pathwaycom/pathway",
+      "language": "Python",
+      "stars": 62956,
+      "forks": 1677,
+      "activity": 1,
+      "habitable": true,
+      "born": 2022,
+      "planets": [
+        {
+          "id": "sheikhsajid69/pathway",
+          "name": "pathway",
+          "owner": "sheikhsajid69",
+          "stars": 6
+        },
+        {
+          "id": "riduwan45/pathway",
+          "name": "pathway",
+          "owner": "riduwan45",
+          "stars": 5
+        },
+        {
+          "id": "tarxemo/pathway",
+          "name": "pathway",
+          "owner": "tarxemo",
+          "stars": 5
+        },
+        {
+          "id": "dewanshshekhar/pathway",
+          "name": "pathway",
+          "owner": "dewanshshekhar",
+          "stars": 2
+        },
+        {
+          "id": "RohanExploit/pathway",
+          "name": "pathway",
+          "owner": "RohanExploit",
+          "stars": 2
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:04.801Z"
+    },
+    "Zie619/n8n-workflows": {
+      "id": "Zie619/n8n-workflows",
+      "owner": "Zie619",
+      "name": "n8n-workflows",
+      "fullName": "Zie619/n8n-workflows",
+      "language": "Python",
+      "stars": 55174,
+      "forks": 7317,
+      "activity": 0.978,
+      "habitable": true,
+      "born": 2025,
+      "planets": [
+        {
+          "id": "44510/n8n-workflow",
+          "name": "n8n-workflow",
+          "owner": "44510",
+          "stars": 34
+        },
+        {
+          "id": "n8n-community/all-n8n-workflows",
+          "name": "all-n8n-workflows",
+          "owner": "n8n-community",
+          "stars": 27
+        },
+        {
+          "id": "Shubhamsaboo/n8n-workflows",
+          "name": "n8n-workflows",
+          "owner": "Shubhamsaboo",
+          "stars": 13
+        },
+        {
+          "id": "yashab-cyber/n8n-workflows",
+          "name": "n8n-workflows",
+          "owner": "yashab-cyber",
+          "stars": 8
+        },
+        {
+          "id": "smirk-dev/n8n-workflows",
+          "name": "n8n-workflows",
+          "owner": "smirk-dev",
+          "stars": 7
+        }
+      ],
+      "fetchedAt": "2026-06-16T22:12:05.593Z"
+    }
+  }
+}
