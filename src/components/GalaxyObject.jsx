@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as THREE from 'three'
-import { metaForLanguage } from '../data/languages'
+import { galaxyMetaFor } from '../data/languages'
 
 // Generate a flat spiral point cloud (a stylised galaxy disk).
 function useSpiralGeometry(count, size, seed) {
@@ -53,7 +53,7 @@ export default function GalaxyObject({ galaxy, fullPosition, alive = true, onSel
   }, [galaxy.id])
 
   const geometry = useSpiralGeometry(900, size, seed)
-  const facts = useMemo(() => metaForLanguage(galaxy.id), [galaxy.id])
+  const facts = useMemo(() => galaxyMetaFor(galaxy.name ?? galaxy.id), [galaxy.name, galaxy.id])
 
   const fullVec = useMemo(() => new THREE.Vector3(...fullPosition), [fullPosition])
   const fullDist = useMemo(() => Math.max(fullVec.length(), 0.001), [fullVec])

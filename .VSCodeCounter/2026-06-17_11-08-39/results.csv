@@ -1,0 +1,34 @@
+"filename", "language", "Markdown", "JavaScript JSX", "JavaScript", "JSON", "PostCSS", "HTML", "comment", "blank", "total"
+"c:\Users\maxko\Documents\Dev\KP_VIT\Project_description.md", "Markdown", 202, 0, 0, 0, 0, 0, 0, 81, 283
+"c:\Users\maxko\Documents\Dev\KP_VIT\README.md", "Markdown", 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\maxko\Documents\Dev\KP_VIT\data\repos.db.json", "JSON", 0, 0, 0, 812, 0, 0, 0, 0, 812
+"c:\Users\maxko\Documents\Dev\KP_VIT\eslint.config.js", "JavaScript", 0, 0, 20, 0, 0, 0, 0, 2, 22
+"c:\Users\maxko\Documents\Dev\KP_VIT\index.html", "HTML", 0, 0, 0, 0, 0, 13, 0, 1, 14
+"c:\Users\maxko\Documents\Dev\KP_VIT\package-lock.json", "JSON", 0, 0, 0, 3354, 0, 0, 0, 1, 3355
+"c:\Users\maxko\Documents\Dev\KP_VIT\package.json", "JSON", 0, 0, 0, 35, 0, 0, 0, 1, 36
+"c:\Users\maxko\Documents\Dev\KP_VIT\public\data\universe.json", "JSON", 0, 0, 0, 997, 0, 0, 0, 0, 997
+"c:\Users\maxko\Documents\Dev\KP_VIT\scripts\enrich.mjs", "JavaScript", 0, 0, 179, 0, 0, 0, 21, 27, 227
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\App.jsx", "JavaScript JSX", 0, 5, 0, 0, 0, 0, 0, 3, 8
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\BlackHole.jsx", "JavaScript JSX", 0, 137, 0, 0, 0, 0, 8, 19, 164
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\GalaxyCore.jsx", "JavaScript JSX", 0, 22, 0, 0, 0, 0, 8, 6, 36
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\GalaxyObject.jsx", "JavaScript JSX", 0, 162, 0, 0, 0, 0, 14, 18, 194
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\GalaxyView.jsx", "JavaScript JSX", 0, 39, 0, 0, 0, 0, 5, 8, 52
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\OrbitRing.jsx", "JavaScript JSX", 0, 22, 0, 0, 0, 0, 0, 4, 26
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Planet.jsx", "JavaScript JSX", 0, 63, 0, 0, 0, 0, 1, 5, 69
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Scene.jsx", "JavaScript JSX", 0, 267, 0, 0, 0, 0, 17, 35, 319
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\SearchBar.jsx", "JavaScript JSX", 0, 71, 0, 0, 0, 0, 2, 7, 80
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\ShipCamera.jsx", "JavaScript JSX", 0, 56, 0, 0, 0, 0, 10, 13, 79
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Singularity.jsx", "JavaScript JSX", 0, 43, 0, 0, 0, 0, 5, 6, 54
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\StarSystem.jsx", "JavaScript JSX", 0, 118, 0, 0, 0, 0, 7, 15, 140
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Sun.jsx", "JavaScript JSX", 0, 23, 0, 0, 0, 0, 0, 4, 27
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Timeline.jsx", "JavaScript JSX", 0, 32, 0, 0, 0, 0, 3, 5, 40
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Universe.jsx", "JavaScript JSX", 0, 38, 0, 0, 0, 0, 3, 4, 45
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\modelViewer.jsx", "JavaScript JSX", 0, 16, 0, 0, 0, 0, 0, 3, 19
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\components\models\Optimized.jsx", "JavaScript JSX", 0, 55, 0, 0, 0, 0, 9, 4, 68
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\data\languages.js", "JavaScript", 0, 0, 142, 0, 0, 0, 22, 14, 178
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\data\narrative.js", "JavaScript", 0, 0, 37, 0, 0, 0, 7, 10, 54
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\data\useUniverse.js", "JavaScript", 0, 0, 49, 0, 0, 0, 2, 7, 58
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\index.css", "PostCSS", 0, 0, 0, 0, 1, 0, 0, 0, 1
+"c:\Users\maxko\Documents\Dev\KP_VIT\src\main.jsx", "JavaScript JSX", 0, 9, 0, 0, 0, 0, 0, 2, 11
+"c:\Users\maxko\Documents\Dev\KP_VIT\vite.config.js", "JavaScript", 0, 0, 10, 0, 0, 0, 1, 2, 13
+"Total", "-", 203, 1178, 437, 5198, 1, 13, 145, 307, 7482

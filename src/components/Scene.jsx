@@ -7,6 +7,9 @@ import GalaxyView from './GalaxyView'
 import ShipController from './ShipCamera'
 import SearchBar from './SearchBar'
 import Timeline from './Timeline'
+import BoardComputer from './BoardComputer'
+import ProximityDetector from './ProximityDetector'
+import { layoutSystems } from '../data/galaxyLayout'
 import { useUniverse } from '../data/useUniverse'
 import { galaxyPosition } from '../data/languages'
 import { narrativeFor } from '../data/narrative'
@@ -21,8 +24,8 @@ const CONTROLS = [
 ]
 
 const ORIGIN           = new THREE.Vector3(0, 0, 0)
-const UNIVERSE_DEFAULT = new THREE.Vector3(0, 35, 80)
-const GALAXY_DEFAULT   = new THREE.Vector3(0, 32, 78)
+const UNIVERSE_DEFAULT = new THREE.Vector3(0, 70, 175)
+const GALAXY_DEFAULT   = new THREE.Vector3(0, 48, 115)
 const SHIP_START       = new THREE.Vector3(0, 2, 18)   // matches ShipController spawn
 const SHIP_CHASE       = new THREE.Vector3(0, 4.5, 27) // behind (+Z) and above the ship
 const CURRENT_YEAR     = new Date().getFullYear()
@@ -61,12 +64,28 @@ export default function Scene() {
 
   const cameraRef = useRef(null)
   const controlsRef = useRef(null)
+  const shipPosRef = useRef(new THREE.Vector3())
   const timers = useRef([])
+
+  const [nearby, setNearby] = useState(null)
 
   const activeGalaxy = useMemo(
     () => galaxies.find((g) => g.id === activeId) ?? null,
     [galaxies, activeId],
   )
+
+  // Candidate objects the board computer can detect: star systems in galaxy
+  // view, galaxies in universe view (with their world positions).
+  const proximityTargets = useMemo(() => {
+    if (view === 'galaxy' && activeGalaxy) {
+      return layoutSystems(activeGalaxy.systems ?? []).map(({ system, position }) => ({
+        kind: 'system', id: system.id, position, data: system,
+      }))
+    }
+    return galaxies
+      .filter((g) => year == null || year > g.born)
+      .map((g) => ({ kind: 'galaxy', id: g.id, position: new THREE.Vector3(...galaxyPosition(g)), data: g }))
+  }, [view, activeGalaxy, galaxies, year])
 
   const minYear = useMemo(
     () => (galaxies.length ? Math.min(...galaxies.map((g) => g.born)) : 1970),
@@ -135,6 +154,7 @@ export default function Scene() {
   function toggleFly() {
     setFlyMode((v) => !v)
     setSelected(null)
+    setNearby(null)
   }
 
   const spacelog = selected ? narrativeFor(selected, activeGalaxy) : null
@@ -143,7 +163,7 @@ export default function Scene() {
     <KeyboardControls map={CONTROLS}>
       <div className="relative w-screen h-screen bg-black overflow-hidden">
         <Canvas
-          camera={{ position: [0, 35, 80], fov: 55, near: 0.1, far: 1000 }}
+          camera={{ position: [0, 70, 175], fov: 55, near: 0.1, far: 1000 }}
           gl={{ antialias: true }}
         >
           <Stars radius={300} depth={120} count={9000} factor={5} saturation={0} fade speed={0.4} />
@@ -164,11 +184,18 @@ export default function Scene() {
               enableZoom
               enableRotate
               minDistance={flyMode ? 2 : 5}
-              maxDistance={flyMode ? 80 : view === 'universe' ? 220 : 300}
+              maxDistance={flyMode ? 80 : view === 'universe' ? 450 : 650}
               target={flyMode ? undefined : [0, 0, 0]}
             />
           )}
-          {flyMode && <ShipController controlsRef={controlsRef} />}
+          {flyMode && <ShipController controlsRef={controlsRef} shipPosRef={shipPosRef} />}
+          {flyMode && (
+            <ProximityDetector
+              shipPosRef={shipPosRef}
+              targets={proximityTargets}
+              onNearby={setNearby}
+            />
+          )}
         </Canvas>
 
         {/* ── Breadcrumb / title ── */}
@@ -194,16 +221,19 @@ export default function Scene() {
               ← Universe
             </button>
           )}
-          <button
-            className="font-mono text-xs border rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
-            style={{
-              color:       flyMode ? '#f87171' : '#86efac',
-              borderColor: flyMode ? '#f87171' : '#86efac',
-            }}
-            onClick={toggleFly}
-          >
-            {flyMode ? '✕ Exit Ship' : '▶ Board Ship'}
-          </button>
+          {/* Boarding the ship is only possible inside a galaxy */}
+          {view === 'galaxy' && (
+            <button
+              className="font-mono text-xs border rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
+              style={{
+                color:       flyMode ? '#f87171' : '#86efac',
+                borderColor: flyMode ? '#f87171' : '#86efac',
+              }}
+              onClick={toggleFly}
+            >
+              {flyMode ? '✕ Exit Ship' : '▶ Board Ship'}
+            </button>
+          )}
         </div>
 
         {/* ── Legend toggle ── */}
@@ -306,6 +336,9 @@ export default function Scene() {
             </div>
           </div>
         )}
+
+        {/* ── Board computer (fly mode) ── */}
+        {flyMode && <BoardComputer nearby={nearby} galaxy={activeGalaxy} />}
 
         {/* ── Transition fade ── */}
         <div

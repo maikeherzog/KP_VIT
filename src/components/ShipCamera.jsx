@@ -19,7 +19,7 @@ const _delta  = new THREE.Vector3()
 // Flies the ship with WASD/QE and lets the camera orbit freely around it:
 // instead of driving the camera directly, it just keeps the OrbitControls
 // target glued to the ship, so the user can rotate/zoom the view like outside.
-export default function ShipController({ controlsRef }) {
+export default function ShipController({ controlsRef, shipPosRef }) {
   const { camera } = useThree()
   const groupRef = useRef()
   const orient   = useRef(new THREE.Quaternion().setFromEuler(new THREE.Euler(0, Math.PI, 0)))
@@ -55,6 +55,7 @@ export default function ShipController({ controlsRef }) {
       groupRef.current.position.copy(pos.current)
       groupRef.current.quaternion.copy(orient.current)
     }
+    if (shipPosRef) shipPosRef.current.copy(pos.current)  // share ship position
 
     // Third-person follow: translate the camera by the same delta the ship
     // moved, then move the orbit target onto the ship. This glues the camera to

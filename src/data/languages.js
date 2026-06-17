@@ -80,6 +80,36 @@ export const LANGUAGE_META = {
     paradigm: 'Multi-paradigm', designer: 'Chris Lattner (Apple)', typing: 'Static, strong',
     blurb: 'Apple’s safe, fast successor to Objective-C.',
   },
+  shell: {
+    name: 'Shell', color: '#89E051', born: 1989,
+    paradigm: 'Scripting', designer: 'Brian Fox (Bash)', typing: 'Dynamic',
+    blurb: 'The glue of the command line — automating everything in between.',
+  },
+  html: {
+    name: 'HTML', color: '#E34C26', born: 1993,
+    paradigm: 'Markup', designer: 'Tim Berners-Lee', typing: 'n/a',
+    blurb: 'The skeleton of every web page.',
+  },
+  css: {
+    name: 'CSS', color: '#563D7C', born: 1996,
+    paradigm: 'Stylesheet', designer: 'Håkon Wium Lie', typing: 'n/a',
+    blurb: 'Paints the web — layout, colour and motion.',
+  },
+  vue: {
+    name: 'Vue', color: '#41B883', born: 2014,
+    paradigm: 'Component / reactive', designer: 'Evan You', typing: 'Dynamic',
+    blurb: 'A progressive framework template language for reactive UIs.',
+  },
+  lua: {
+    name: 'Lua', color: '#000080', born: 1993,
+    paradigm: 'Multi-paradigm, scripting', designer: 'PUC-Rio (Ierusalimschy et al.)', typing: 'Dynamic',
+    blurb: 'A tiny, fast embeddable scripting language — games love it.',
+  },
+  'jupyter notebook': {
+    name: 'Jupyter Notebook', color: '#DA5B0B', born: 2014,
+    paradigm: 'Literate computing', designer: 'Project Jupyter', typing: 'n/a',
+    blurb: 'Executable notebooks — the home of data science exploration.',
+  },
 }
 
 export const FALLBACK_META = {
@@ -131,14 +161,36 @@ export function metaForLanguage(language) {
   return LANGUAGE_META[languageKey(language)] ?? FALLBACK_META
 }
 
+function hashHue(str) {
+  let h = 0
+  for (const c of String(str)) h = (h * 31 + c.charCodeAt(0)) & 0xffffffff
+  return Math.abs(h) % 360
+}
+
+// Like metaForLanguage but, for languages outside the curated set, generates a
+// galaxy meta using the *real* language name + a stable hashed colour (instead
+// of collapsing everything into a single grey "Other" galaxy).
+export function galaxyMetaFor(language) {
+  const key = languageKey(language)
+  const known = LANGUAGE_META[key]
+  if (known) return known
+  return {
+    name: language || 'Other',
+    color: `hsl(${hashHue(key || 'other')}, 60%, 62%)`,
+    born: 2005,
+    paradigm: 'Mixed', designer: 'Various', typing: 'Varies',
+    blurb: `${language || 'An uncatalogued language'} — outside the curated set, charting its own galaxy.`,
+  }
+}
+
 // Oldest / newest born years across the known set — used to normalise radius.
 const BORN_YEARS = Object.values(LANGUAGE_META).map((m) => m.born)
 export const OLDEST_BORN = Math.min(...BORN_YEARS)
 export const NEWEST_BORN = Math.max(...BORN_YEARS)
 
 // Inner / outer radius of the galaxy ring in the universe view.
-export const UNIVERSE_INNER_RADIUS = 14
-export const UNIVERSE_OUTER_RADIUS = 60
+export const UNIVERSE_INNER_RADIUS = 30
+export const UNIVERSE_OUTER_RADIUS = 150
 
 // Map a birth year → distance from the universe centre.
 // Older language (smaller year) → larger radius (further out).
@@ -172,6 +224,6 @@ export function expansionFactor(born, year, today) {
 export function galaxyPosition(galaxy) {
   const radius = bornToRadius(galaxy.born)
   const angle = hashAngle(galaxy.id)
-  const y = (hashAngle(galaxy.id + 'y') / Math.PI - 1) * 8 // -8..8
+  const y = (hashAngle(galaxy.id + 'y') / Math.PI - 1) * 18 // -18..18
   return [Math.cos(angle) * radius, y, Math.sin(angle) * radius]
 }

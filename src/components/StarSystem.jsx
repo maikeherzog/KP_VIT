@@ -4,13 +4,32 @@ import { Html } from '@react-three/drei'
 import * as THREE from 'three'
 import Planet from './Planet'
 
-// Warm palette = habitable (actively maintained); cool/blue = stale.
-const WARM = new THREE.Color('#ffd27a')
-const COOL = new THREE.Color('#5a7fb5')
+const CURRENT_YEAR = new Date().getFullYear()
 
-// star radius from star_count (log compressed)
+// Age-based colour: a young repo burns warm gold; as it ages the star fades
+// toward a pale blue-white "white dwarf". (Brightness is driven separately by
+// recent activity, size by star count.)
+const STAR_RAMP = [
+  [0,  new THREE.Color('#ffc24d')], // young — warm gold
+  [4,  new THREE.Color('#ffe9b8')], // maturing — warm white
+  [9,  new THREE.Color('#f2f5ff')], // aging — white
+  [18, new THREE.Color('#b4ccff')], // white dwarf — pale blue-white
+]
+function starColor(born) {
+  const age = Math.max(0, CURRENT_YEAR - (born ?? CURRENT_YEAR))
+  if (age <= STAR_RAMP[0][0]) return STAR_RAMP[0][1].clone()
+  for (let i = 1; i < STAR_RAMP.length; i++) {
+    if (age <= STAR_RAMP[i][0]) {
+      const t = (age - STAR_RAMP[i - 1][0]) / (STAR_RAMP[i][0] - STAR_RAMP[i - 1][0])
+      return STAR_RAMP[i - 1][1].clone().lerp(STAR_RAMP[i][1], t)
+    }
+  }
+  return STAR_RAMP[STAR_RAMP.length - 1][1].clone()
+}
+
+// star radius from star_count (log compressed) — ~0.4 (small) → ~3.0 (mega-repo)
 function starRadius(stars) {
-  return 0.35 + Math.min(1.4, Math.log10(Math.max(stars, 1)) / 6 * 1.4)
+  return 0.4 + Math.min(1, Math.log10(Math.max(stars, 1)) / 5.4) * 2.6
 }
 
 // deterministic RNG seeded from a string (stable layout per repo/fork)
@@ -58,7 +77,7 @@ export default function StarSystem({ system, position, onSelect }) {
   const [hovered, setHovered] = useState(false)
 
   const radius = starRadius(system.stars)
-  const color = system.habitable ? WARM : COOL
+  const color = useMemo(() => starColor(system.born), [system.born])
   const emissiveIntensity = 0.5 + system.activity * 1.8
 
   const seedNum = useMemo(() => {
@@ -69,11 +88,17 @@ export default function StarSystem({ system, position, onSelect }) {
 
   const texture = useMemo(() => makeStarTexture(color, seedNum), [color, seedNum])
 
-  // randomised, inclined orbits so forks look like a real planetary system
+  // Number of planets is a log tier of the total fork count (each 10× = one more
+  // planet): <10 forks → 0, 10–99 → 1, 100s → 2, 1k → 3, 10k → 4, 100k+ → 5.
+  // We show that many of the top forks (by stars) — each keeps its own
+  // star-count-driven look, so count = magnitude, appearance = the fork itself.
   const planets = useMemo(() => {
-    return (system.planets ?? []).map((fork) => {
+    const forks = system.planets ?? []
+    const tier = system.forks > 0 ? Math.floor(Math.log10(system.forks)) : 0
+    const count = Math.max(0, Math.min(tier, forks.length))
+    return forks.slice(0, count).map((fork) => {
       const rng = rngFromString(fork.id || fork.name || 'fork')
-      const pr = 0.1 + Math.min(0.3, Math.log10(Math.max(fork.stars, 1)) / 5 * 0.3)
+      const pr = 0.12 + rng() * 0.22 // size is aesthetic variety only — no per-fork data claim
       const dir = rng() < 0.5 ? 1 : -1
       return {
         ...fork,
@@ -86,7 +111,7 @@ export default function StarSystem({ system, position, onSelect }) {
         tilt: [(rng() - 0.5) * 1.0, rng() * Math.PI * 2, (rng() - 0.5) * 1.0],
       }
     })
-  }, [system.planets, radius])
+  }, [system.planets, system.forks, radius])
 
   useFrame((_, delta) => {
     if (coreRef.current) coreRef.current.rotation.y += delta * 0.15
@@ -94,7 +119,8 @@ export default function StarSystem({ system, position, onSelect }) {
 
   return (
     <group position={position}>
-      <pointLight intensity={system.activity * 2 + 0.3} distance={14} decay={1.6} color={color} />
+      {/* No per-star light — the star is self-lit (emissive) so 100+ systems
+          stay performant. Planets are lit by the galaxy core + ambient. */}
       <mesh
         ref={coreRef}
         onClick={(e) => { e.stopPropagation(); onSelect?.(system) }}
