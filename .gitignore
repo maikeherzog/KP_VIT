@@ -24,6 +24,9 @@ dist-ssr
 *.sw?
 
 
+# Claude 
+/.claude
+
 # Python
 backend/.venv/
 backend/__pycache__/
@@ -43,3 +46,4 @@ backend/data/programming_languages_data.csv
 **/__pycache__/
 **/*.pyc
 **/*.pyo
+

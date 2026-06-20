@@ -1,12 +1,13 @@
-import ModelViewer from './components/modelViewer';
-import Chat from "./components/chatBot.jsx";
+import Scene from './components/Scene'
+import Chat from './components/chatBot.jsx'
 
 const App = () => {
-    return (
-        <main>
-        <ModelViewer/>
-            <Chat/>
-        </main>
-    )
+  return (
+    <>
+      <Scene />
+      <Chat />
+    </>
+  )
 }
+
 export default App

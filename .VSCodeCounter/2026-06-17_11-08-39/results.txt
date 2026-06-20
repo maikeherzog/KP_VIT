@@ -1,0 +1,72 @@
+Date : 2026-06-17 11:08:39
+Directory : c:\Users\maxko\Documents\Dev\KP_VIT
+Total : 32 files,  7030 codes, 145 comments, 307 blanks, all 7482 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JSON           |          4 |      5,198 |          0 |          2 |      5,200 |
+| JavaScript JSX |         18 |      1,178 |         92 |        161 |      1,431 |
+| JavaScript     |          6 |        437 |         53 |         62 |        552 |
+| Markdown       |          2 |        203 |          0 |         81 |        284 |
+| HTML           |          1 |         13 |          0 |          1 |         14 |
+| PostCSS        |          1 |          1 |          0 |          0 |          1 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                    | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                       |         32 |      7,030 |        145 |        307 |      7,482 |
+| . (Files)                                                               |          7 |      3,635 |          1 |         88 |      3,724 |
+| data                                                                    |          1 |        812 |          0 |          0 |        812 |
+| public                                                                  |          1 |        997 |          0 |          0 |        997 |
+| public\data                                                             |          1 |        997 |          0 |          0 |        997 |
+| scripts                                                                 |          1 |        179 |         21 |         27 |        227 |
+| src                                                                     |         22 |      1,407 |        123 |        192 |      1,722 |
+| src (Files)                                                             |          3 |         15 |          0 |          5 |         20 |
+| src\components                                                          |         16 |      1,164 |         92 |        156 |      1,412 |
+| src\components (Files)                                                  |         15 |      1,109 |         83 |        152 |      1,344 |
+| src\components\models                                                   |          1 |         55 |          9 |          4 |         68 |
+| src\data                                                                |          3 |        228 |         31 |         31 |        290 |
++-------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                | language       | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\maxko\Documents\Dev\KP_VIT\Project_description.md              | Markdown       |        202 |          0 |         81 |        283 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\README.md                           | Markdown       |          1 |          0 |          0 |          1 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\data\repos.db.json                  | JSON           |        812 |          0 |          0 |        812 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\eslint.config.js                    | JavaScript     |         20 |          0 |          2 |         22 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\index.html                          | HTML           |         13 |          0 |          1 |         14 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\package-lock.json                   | JSON           |      3,354 |          0 |          1 |      3,355 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\package.json                        | JSON           |         35 |          0 |          1 |         36 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\public\data\universe.json           | JSON           |        997 |          0 |          0 |        997 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\scripts\enrich.mjs                  | JavaScript     |        179 |         21 |         27 |        227 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\App.jsx                         | JavaScript JSX |          5 |          0 |          3 |          8 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\BlackHole.jsx        | JavaScript JSX |        137 |          8 |         19 |        164 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\GalaxyCore.jsx       | JavaScript JSX |         22 |          8 |          6 |         36 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\GalaxyObject.jsx     | JavaScript JSX |        162 |         14 |         18 |        194 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\GalaxyView.jsx       | JavaScript JSX |         39 |          5 |          8 |         52 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\OrbitRing.jsx        | JavaScript JSX |         22 |          0 |          4 |         26 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Planet.jsx           | JavaScript JSX |         63 |          1 |          5 |         69 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Scene.jsx            | JavaScript JSX |        267 |         17 |         35 |        319 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\SearchBar.jsx        | JavaScript JSX |         71 |          2 |          7 |         80 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\ShipCamera.jsx       | JavaScript JSX |         56 |         10 |         13 |         79 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Singularity.jsx      | JavaScript JSX |         43 |          5 |          6 |         54 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\StarSystem.jsx       | JavaScript JSX |        118 |          7 |         15 |        140 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Sun.jsx              | JavaScript JSX |         23 |          0 |          4 |         27 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Timeline.jsx         | JavaScript JSX |         32 |          3 |          5 |         40 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\Universe.jsx         | JavaScript JSX |         38 |          3 |          4 |         45 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\modelViewer.jsx      | JavaScript JSX |         16 |          0 |          3 |         19 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\components\models\Optimized.jsx | JavaScript JSX |         55 |          9 |          4 |         68 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\data\languages.js               | JavaScript     |        142 |         22 |         14 |        178 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\data\narrative.js               | JavaScript     |         37 |          7 |         10 |         54 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\data\useUniverse.js             | JavaScript     |         49 |          2 |          7 |         58 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\index.css                       | PostCSS        |          1 |          0 |          0 |          1 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\src\main.jsx                        | JavaScript JSX |          9 |          0 |          2 |         11 |
+| c:\Users\maxko\Documents\Dev\KP_VIT\vite.config.js                      | JavaScript     |         10 |          1 |          2 |         13 |
+| Total                                                                   |                |      7,030 |        145 |        307 |      7,482 |
++-------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
