@@ -220,34 +220,90 @@ The project is divided into modular work packages (WPs) that reflect the main sy
 
 The project duration spans from 07.05.2026 to 21.07.2026. The work is divided into structured phases to ensure steady progress and timely delivery.
 
-### Phase 1: Planning & Research (07.05 – 14.05)
+### Phase 1: Planning & Research
 - Finalize project idea and scope
 - Review related work, datasets, and tools
 - Define system architecture and requirements
 
-### Phase 2: Design (15.05 – 25.05)
+### Phase 2: Design
 - Design system components and workflows
 - Define data structures and interfaces
 - Create initial UI/UX sketches
 
-### Phase 3: Core Implementation (26.05 – 20.06)
+### Phase 3: Core Implementation
 - Develop main functionalities
 - Implement core algorithms
 - Integrate basic system components
 
-### Phase 4: Integration & Advanced Features (21.06 – 05.07)
+### Phase 4: Integration & Advanced Features
 - Combine all modules into a working system
 - Add optional and advanced features
 - Improve performance and usability
 
-### Phase 5: Testing & Debugging (06.07 – 14.07)
+### Phase 5: Testing & Debugging
 - Perform functional testing
 - Fix bugs and optimize system behavior
 - Validate results against requirements
-### Phase 6: Finalization & Submission (15.07 – 21.07)
+### Phase 6: Finalization & Submission
 - Prepare documentation and report
 - Final code cleanup and polishing
 - Prepare presentation
+
+The following chart shows an overview of the time periods each phase is planned to take up.
+
+<img src="images/gantt chart.drawio.svg">
+
+## UI concept and sketches
+
+As described before, the user interface (UI) will be a threedimensional world resembling a universe in space, which the user can travel through. The UI will be split into three main views. The user can travel between these views via mouse controls. Upon view change,  a fly-to-animation will be triggered and played to load the new scene to provide a seamless experience for the user. 
+
+### Universe view
+
+![universe view](images/sketch_universe.jpeg)
+
+The data storytelling journey will start in the 'universe view'. Within this universe, every programming language is represented as its own galaxy (1). The further away from the center of the universe (2), the younger the language is. To give an overview of how old each language is, this view will contain a simple timeline (3). There was also the idea of creating galaxy-like images out of the logos of the respective programming languages. This could enhance the visual overview and help the user with finding a programming language they're interested in 'visiting'. 
+The user can travel through the space with a spaceship (4) and can visit all different galaxies. Additionally, the UI will contain a mouse pointer (6), with whom the user can click upon galaxies to select or deselect them. 
+In case the user wants to find a certain programming language, repository or fork, they can search for that via a search bar (5). In this sketch the bar is just placed in the bottom right corner of the screen. However, the team has been brainstorming about other ideas, such as placing it inside the spaceship to help with immersion rather than recreating the feeling of a typical web search function. 
+
+![universe view with selected galaxy](images/sketch_universe_selected.jpeg)
+
+Upon selecting a specific programming language, a dialogue window opens next to the galaxy (1). This will display the most important information about the programming language, provided by the llm model. The text will be generated in a spaceship log style to support the narrative. Within this selection mode, the spaceship will orbit around the galaxy (2), highlighting the users current position. The dialogue window also contains a button to enter the galaxy via selection (3). If clicked, another fly-to-animation will be triggered and the user will be transported to the next view, which will then be the galaxy view. 
+
+### Galaxy view
+
+![galaxy view with selected sun](images/sketch_galaxy_selected.jpeg)
+
+This second view will display all repositories, whose main programming language is the one selected beforehand. Within this view every star or sun represents one github repository, while the orbiting plane represent relevant forks or sub projects of each repository (1). The size and color also encode different data concerning the "habitability" of the galaxy, for example black holes marking archived or abandoned repositories and red suns showing currently inactive projects (2). To keep in mind what programming language is currently selected, the idea was to place a simple box with the name in the lower left corner (3). However, the team is not yet satisfied with this idea and therefore will continue to elaborate on that. 
+Similar to the universe view, the user can select a sun or star by clicking with the mouse, which will open a dialogue window displaying important information narrated by the llm model in a ship log style (4). Since this information will be color coded to signal which repositories might be more or less habitable, the user will have the possibility to open a legend (5) to get an overview and a bettter understanding of the encoded information. Furthermore, this view will also contain the possibility to travel to a selected repository by clicking on a button in the dialogue window (6). 
+
+### Solar system view
+
+![solar system view](images/sketch_solar_system.jpeg)
+
+In this view, the selected repository will be displayed as a sun or star in the middle of a solar system (1), having important forks or sub projects orbiting around them (2). Similar to the other two views, the user can move around the space via controlling the spaceship (3) and/or clicking on specific forks/projects. Upon clicking, a dialogue window will open, just like in the other views explained above. 
+
+## Current implementation state
+### Data
+For the data, we first downloaded a dataset from hugging Face as a CSV file format. Then we imported it into a SQLite database to provide a structures, queryable foundation for the data. Because we needed additional information like the primary programming language and the repository description we enriched the existing data using the GitHub API. We supplement each record with the additional data. 
+To make the data in the database easily accessible and usable we developed a REST API with multiple endpoints. Each endpoint serves a specific purpose. To the whole API can easiliy be added new endpoints.
+
+### Frontend
+We have already implemented the spaceship and a base frame of the solar system for the frontend. The spaceship can be controlled using the mouse. You can board and steer the ship.
+
+### Literature Research
+For the catalogue, we started by reading several papers and collecting them in an Excel spreadsheet. We summarised the content of the different papers by filling in the columns of the table. The columns are: Use case, domain, interaction, used technologies, goal and shortcomings. Currently, we have completed half of our literature research goal.
+
+### LLM Intergration
+- Currently we are using gemma2:9b to analyse the user question, generate sql query and summerise the data retrieved from the database in a storytelling manner. 
+- The user communicate with the LLM using a chatBox
+
+### Chatbox
+
+![Chatbox](images/chatbox.png)
+
+### Generated prompt
+
+![Generated prompt](images/prompt.png)
   
 ## Work distribution
 
