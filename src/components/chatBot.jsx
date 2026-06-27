@@ -42,6 +42,9 @@ const Chat = () => {
                 text: data.reply,
             };
 
+            const messageSound = new SpeechSynthesisUtterance(data.reply);
+            speechSynthesis.speak(messageSound);
+
             setMessages((prev) => [...prev, botMessage]);
 
         } catch (error) {
