@@ -67,8 +67,21 @@ export function buildNarratorContext({ kind, data, distance, galaxy } = {}) {
 // LLM call (POST `context.prompt` to the Anthropic API). Async already, so the
 // Board Computer's loading UX is ready for the swap.
 export async function requestNarration(context, galaxy) {
-  await new Promise((r) => setTimeout(r, 350)) // mimic network latency
   if (!context) return ''
+
+  try {
+    const response = await fetch('http://localhost:3000/narrate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: context.prompt }),
+    })
+    const data = await response.json()
+    if (data.reply) return data.reply
+  } catch (err) {
+    console.error('Narration LLM failed, using template:', err)
+  }
+
+  // fallback if Ollama/backend is down
   if (context.kind === 'system') return narrativeFor(context.data, galaxy)
 
   const g = context.data

@@ -36,6 +36,8 @@ export default function BoardComputer({ nearby, galaxy }) {
     setLoading(true)
     const text = await requestNarration(ctx, galaxy)
     setLog(text)
+    const textToSound = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(textToSound);
     setLoading(false)
   }
 
@@ -131,7 +133,7 @@ export default function BoardComputer({ nearby, galaxy }) {
               {log && (
                 <div className="mt-3 text-xs leading-relaxed opacity-90 border-l-2 pl-3" style={{ borderColor: ACCENT }}>
                   {log}
-                  <div className="mt-1.5 text-[9px] opacity-40">local template · LLM not yet connected</div>
+                  <div className="mt-1.5 text-[9px] opacity-40">ship log · llama3.2:1b</div>
                 </div>
               )}
             </>

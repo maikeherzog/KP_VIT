@@ -62,10 +62,10 @@ Question: {message}
 SQL:"""
 
     try:
-        # Step 1: Generate SQL with gemma2:9b-coder
+        # Step 1: Generate SQL with llama3.2:1b
         sql_response = requests.post(
             "http://localhost:11434/api/generate",
-            json={"model": "gemma2:9b", "prompt": sql_prompt, "stream": False}
+            json={"model": "llama3.2:1b", "prompt": sql_prompt, "stream": False}
         )
         sql_query = sql_response.json().get("response", "").strip()
         print("Generated SQL:", sql_query)
@@ -83,7 +83,7 @@ SQL:"""
 
         print("Query results:", context)
 
-        # Step 3: Answer naturally with gemma2:9b
+        # Step 3: Answer naturally with llama3.2:1b
         answer_prompt = f"""Answer the user's question using ONLY the data provided below.
 Do not say you lack access to databases. The data has already been retrieved for you.
 Give a short, direct answer in one or two sentences.
@@ -95,12 +95,36 @@ Answer:"""
 
         answer_response = requests.post(
             "http://localhost:11434/api/generate",
-            json={"model": "gemma2:9b", "prompt": answer_prompt, "stream": False}
+            json={"model": "llama3.2:1b", "prompt": answer_prompt, "stream": False}
         )
 
         reply = answer_response.json().get("response", "No response from model")
         return jsonify({"reply": reply})
 
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Failed to contact Ollama"}), 500
+
+
+@app.route("/narrate", methods=["POST"])
+def narrate():
+    data = request.get_json()
+    prompt = data.get("prompt", "")
+    if not prompt:
+        return jsonify({"error": "missing prompt"}), 400
+
+    try:
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={"model": "llama3.2:1b", "prompt": prompt, "stream": False},
+        )
+        body = response.json()
+        if body.get("error"):
+            return jsonify({"error": body["error"]}), 502
+        reply = body.get("response", "").strip()
+        if not reply:
+            return jsonify({"error": "Ollama returned an empty response"}), 502
+        return jsonify({"reply": reply})
     except Exception as e:
         print(e)
         return jsonify({"error": "Failed to contact Ollama"}), 500
