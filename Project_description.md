@@ -36,46 +36,46 @@ Planet and star models are either procedurally generated within Three.js (e.g., 
 
 The following aspects are explicitly *not* part of this project:
 
-- Real-time synchronization with live GitHub data (the application uses a static snapshot of the dataset, optionally enriched once via API).
-- Multi-user collaboration or shared exploration sessions.
-- Training or fine-tuning of custom machine learning models (existing LLM APIs are used for narrative generation).
-- Support for datasets beyond GitHub repositories (the application is designed for this specific dataset and metaphor).
-- A comprehensive summative user study (a small formative evaluation with 3–5 participants is planned to validate the concept).
-- Applications in the medical domain.
+- Real-time synchronization with live GitHub data (the application uses a static snapshot of the dataset, optionally enriched once via API)
+- Multi-user collaboration or shared exploration sessions
+- Training or fine-tuning of custom machine learning models (existing LLM APIs are used for narrative generation)
+- Support for datasets beyond GitHub repositories (the application is designed for this specific dataset and metaphor)
+- A comprehensive summative user study (a small formative evaluation with 3–5 participants is planned to validate the concept)
+- Applications in the medical domain
 
 ## Requirements
 
 The following requirements are categorized using the MoSCoW method [^7].
 
 **Must Have:**
-- A 3D explorable universe rendered in the browser using Three.js, containing galaxies (programming languages), stars (repositories), and planets (forks).
-- Spatial encoding of language age via galactic position (older languages at the outer rim, younger languages near the center).
-- Visual encoding of repository metrics: star count mapped to sun size, trending recency mapped to brightness/luminosity, and data staleness mapped to celestial state (main-sequence star, red giant, white dwarf, black hole).
-- Interactive camera fly-to animation when the user selects a celestial object.
-- Mouse-based orbit controls (rotation, zoom, pan) for scene navigation.
-- Contextual information panels displaying repository metadata (name, description, stars, forks, language, trending history) upon selection.
-- Color coding of celestial objects to communicate activity level (warm = active, cold = dormant).
-- Data pipeline that loads and preprocesses the github-top-projects dataset from Hugging Face.
+- A 3D explorable universe rendered in the browser using Three.js, containing galaxies (programming languages), stars (repositories), and planets (forks)
+- Spatial encoding of language age via galactic position (older languages at the outer rim, younger languages near the center)
+- Visual encoding of repository metrics: star count mapped to sun size, trending recency mapped to brightness/luminosity, and data staleness mapped to celestial state (main-sequence star, red giant, white dwarf, black hole)
+- Interactive camera fly-to animation when the user selects a celestial object
+- Mouse-based orbit controls (rotation, zoom, pan) for scene navigation
+- Contextual information panels displaying repository metadata (name, description, stars, forks, language, trending history) upon selection
+- Color coding of celestial objects to communicate activity level (warm = active, cold = dormant)
+- Data pipeline that loads and preprocesses the github-top-projects dataset from Hugging Face
 
 **Should Have:**
-- A search function allowing the user to find and navigate to a specific repository by name.
-- Enrichment of the dataset with programming language and description metadata via the GitHub REST API.
-- A guided narrative mode that flies the user through the universe along a predefined story path (e.g., from the outer rim inward, visiting notable stars).
-- Procedurally generated or AI-generated textures for planets and stars to visually differentiate categories.
+- A search function allowing the user to find and navigate to a specific repository by name
+- Enrichment of the dataset with programming language and description metadata via the GitHub REST API
+- A guided narrative mode that flies the user through the universe along a predefined story path (e.g., from the outer rim inward, visiting notable stars)
+- Procedurally generated or AI-generated textures for planets and stars to visually differentiate categories
 
 **Could Have:**
-- LLM-generated textual descriptions for repositories, presented in information panels as narrative summaries.
-- Voice narration (text-to-speech) delivering spoken mission briefings about visited projects.
-- Animated orbital mechanics for planets around their parent stars.
-- Visual representation of trending "supernova" events (repositories that gained massive popularity in a short time).
-- Background ambient soundscape to enhance immersion.
+- LLM-generated textual descriptions for repositories, presented in information panels as narrative summaries
+- Voice narration (text-to-speech) delivering spoken mission briefings about visited projects
+- Animated orbital mechanics for planets around their parent stars
+- Visual representation of trending "supernova" events (repositories that gained massive popularity in a short time)
+- Background ambient soundscape to enhance immersion
 
 **Won't Have:**
-- Real-time live data synchronization with GitHub.
-- Support for multiple concurrent users or collaborative exploration.
-- Custom-trained machine learning models.
-- Support for non-GitHub datasets.
-- A full summative user study (only a small formative evaluation is planned).
+- Real-time live data synchronization with GitHub
+- Support for multiple concurrent users or collaborative exploration
+- Custom-trained machine learning models
+- Support for non-GitHub datasets
+- A full summative user study (only a small formative evaluation is planned)
 
 [^7]: D. Clegg and R. Barker, *Case Method Fast-Track: A RAD Approach*. Boston, MA: Addison-Wesley, 1994.
   
@@ -294,8 +294,8 @@ We have already implemented the spaceship and a base frame of the solar system f
 For the catalogue, we started by reading several papers and collecting them in an Excel spreadsheet. We summarised the content of the different papers by filling in the columns of the table. The columns are: Use case, domain, interaction, used technologies, goal and shortcomings. Currently, we have completed half of our literature research goal.
 
 ### LLM Intergration
-- Currently we are using gemma2:9b to analyse the user question, generate sql query and summerise the data retrieved from the database in a storytelling manner. 
-- The user communicate with the LLM using a chatBox
+- Currently we are using gemma2:9b to analyse the user question, generate sql query and summerise the data retrieved from the database in a storytelling manner
+- The user communicate with the LLM using a chatbox
 
 ### Chatbox
 
@@ -311,11 +311,11 @@ The project will be carried out collaboratively by all four team members, with a
 
 At this stage, responsibilities are not strictly fixed. Instead, the team will follow a shared ownership approach, where all members contribute to the core phases of the project:
 
-- **Research & Literature Review**: All members will participate in exploring related work, tools, and datasets.
-- **Design**: System architecture, component design, and planning will be done collaboratively.
-- **Implementation**: Development tasks will be distributed dynamically based on progress, complexity, and individual expertise.
-- **Testing & Debugging**: All members will be involved in validating the system and improving reliability.
-- **Documentation**: The project report and documentation will be written jointly and reviewed by all team members.
+- **Research & Literature Review**: All members will participate in exploring related work, tools, and datasets
+- **Design**: System architecture, component design, and planning will be done collaboratively
+- **Implementation**: Development tasks will be distributed dynamically based on progress, complexity, and individual expertise
+- **Testing & Debugging**: All members will be involved in validating the system and improving reliability
+- **Documentation**: The project report and documentation will be written jointly and reviewed by all team members
 
 As the project progresses, task specialization may naturally emerge, and responsibilities can be adjusted accordingly to improve efficiency and ensure balanced workload distribution.
 
