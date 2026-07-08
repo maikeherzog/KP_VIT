@@ -97,6 +97,46 @@ def list_languages(min_repos: int = Query(5, ge=1)):
         })
     return result
 
+@router.get("/{language}", response_model=GalaxySummary)
+def get_language(language: str):
+    """Metadata for a single galaxy (language) (no repo list, just the summary)."""
+    conn = get_connection()
+    cur = conn.cursor()
+ 
+    min_year, max_year = _get_year_bounds(cur)
+ 
+    cur.execute("""
+        SELECT
+            r.language,
+            COUNT(*)                    AS repo_count,
+            SUM(r.github_stars)         AS total_stars,
+            AVG(r.habitability_score)   AS avg_habitability,
+            pl.appeared                 AS birth_year,
+            pl.type                     AS language_type
+        FROM repositories r
+        LEFT JOIN programming_languages pl
+            ON LOWER(r.language) = LOWER(pl.title)
+        WHERE LOWER(r.language) = LOWER(?)
+          AND r.enrichment_failed = 0
+        GROUP BY r.language
+    """, (language,))
+    row = cur.fetchone()
+    conn.close()
+ 
+    if not row or not row["repo_count"]:
+        raise HTTPException(status_code=404, detail="Language not found")
+ 
+    year = row["birth_year"] or FALLBACK_YEAR
+    return {
+        "language":             row["language"],
+        "repo_count":           row["repo_count"],
+        "total_stars":          row["total_stars"] or 0,
+        "avg_habitability":     round(row["avg_habitability"] or 0.0, 4),
+        "birth_year":           year,
+        "distance_from_center": year_to_distance(year, min_year, max_year),
+        "language_type":        row["language_type"],
+    }
+
 
 @router.get("/{language}/repos", response_model=dict)
 def repos_in_language(
