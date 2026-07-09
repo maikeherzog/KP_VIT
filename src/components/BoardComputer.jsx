@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { buildNarratorContext, requestNarration } from '../data/narratorContext'
 
 const ACCENT = '#7CFC9B'
@@ -21,24 +21,52 @@ export default function BoardComputer({ nearby, galaxy }) {
   const [showContext, setShowContext] = useState(false)
   const [log, setLog] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [speaking, setSpeaking] = useState(false)
 
   const ctx = useMemo(
     () => (nearby ? buildNarratorContext({ ...nearby, galaxy }) : null),
     [nearby, galaxy],
   )
 
-  // reset the generated log when the nearby subject changes (render-time)
-  const [lastId, setLastId] = useState(nearby?.id)
-  if (nearby?.id !== lastId) { setLastId(nearby?.id); setLog(null); setLoading(false) }
+  useEffect(() => {
+    if (!nearby || nearby.kind !== 'system') {
+      setLog(null)
+      setLoading(false)
+      speechSynthesis.cancel()
+      setSpeaking(false)
+      return
+    }
 
-  async function generate() {
-    if (!ctx) return
+    let cancelled = false
+    setLog(null)
     setLoading(true)
-    const text = await requestNarration(ctx, galaxy)
-    setLog(text)
-    const textToSound = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(textToSound);
-    setLoading(false)
+    speechSynthesis.cancel()
+    setSpeaking(false)
+
+    const context = buildNarratorContext({ ...nearby, galaxy })
+
+    requestNarration(context, galaxy).then((text) => {
+      if (cancelled) return
+      setLog(text)
+      setLoading(false)
+
+      const utterance = new SpeechSynthesisUtterance(text)
+      utterance.onend = () => { if (!cancelled) setSpeaking(false) }
+      utterance.onerror = () => { if (!cancelled) setSpeaking(false) }
+      setSpeaking(true)
+      speechSynthesis.speak(utterance)
+    })
+
+    return () => {
+      cancelled = true
+      speechSynthesis.cancel()
+      setSpeaking(false)
+    }
+  }, [nearby?.id, nearby?.kind, galaxy])
+
+  function stopSpeech() {
+    speechSynthesis.cancel()
+    setSpeaking(false)
   }
 
   return (
@@ -120,15 +148,19 @@ export default function BoardComputer({ nearby, galaxy }) {
                 </pre>
               )}
 
-              {/* generate */}
-              <button
-                className="w-full text-xs rounded-lg px-3 py-2 mt-1 transition-colors disabled:opacity-50"
-                style={{ border: `1px solid ${ACCENT}`, color: ACCENT, background: `${ACCENT}10` }}
-                onClick={generate}
-                disabled={loading}
-              >
-                {loading ? 'narrating…' : '▶ Generate log'}
-              </button>
+              {ctx.kind === 'system' && loading && !log && (
+                <div className="text-xs opacity-50 py-1 text-center">narrating…</div>
+              )}
+
+              {ctx.kind === 'system' && speaking && (
+                <button
+                  className="w-full text-xs rounded-lg px-3 py-2 mt-1 transition-colors"
+                  style={{ border: `1px solid ${ACCENT}`, color: ACCENT, background: `${ACCENT}10` }}
+                  onClick={stopSpeech}
+                >
+                  ⏹ Stop narration
+                </button>
+              )}
 
               {log && (
                 <div className="mt-3 text-xs leading-relaxed opacity-90 border-l-2 pl-3" style={{ borderColor: ACCENT }}>
