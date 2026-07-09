@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Chat = () => {
 
@@ -7,6 +7,54 @@ const Chat = () => {
     const [message, setMessage] = useState("");
 
     const [messages, setMessages] = useState([]);
+
+    const [isListening, setIsListening] = useState(false);
+
+    const recognitionRef = useRef(null);
+
+    const SpeechRecognitionAPI =
+        typeof window !== "undefined" &&
+        (window.SpeechRecognition || window.webkitSpeechRecognition);
+    const isSpeechSupported = Boolean(SpeechRecognitionAPI);
+
+    useEffect(() => {
+        if (!isSpeechSupported) return;
+
+        const recognition = new SpeechRecognitionAPI();
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.lang = "de-DE";
+
+        recognition.onresult = (event) => {
+            let finalChunk = "";
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                if (event.results[i].isFinal) {
+                    finalChunk += event.results[i][0].transcript;
+                }
+            }
+            if (finalChunk) {
+                setMessage((prev) => (prev ? `${prev} ${finalChunk}` : finalChunk).trim());
+            }
+        };
+
+        recognition.onerror = () => setIsListening(false);
+        recognition.onend = () => setIsListening(false);
+
+        recognitionRef.current = recognition;
+
+        return () => recognition.stop();
+    }, [isSpeechSupported]);
+
+    function toggleListening() {
+        if (!recognitionRef.current) return;
+        if (isListening) {
+            recognitionRef.current.stop();
+            setIsListening(false);
+        } else {
+            recognitionRef.current.start();
+            setIsListening(true);
+        }
+    }
 
     async function sendMessage() {
 
@@ -194,6 +242,23 @@ const Chat = () => {
                                 focus:ring-black
                             "
                         />
+
+                        {isSpeechSupported && (
+                            <button
+                                onClick={toggleListening}
+                                title={isListening ? "Aufnahme stoppen" : "Spracheingabe starten"}
+                                className={`
+                                    px-4
+                                    rounded-xl
+                                    transition
+                                    ${isListening
+                                        ? "bg-red-500 text-white animate-pulse"
+                                        : "bg-white text-black hover:bg-gray-500"}
+                                `}
+                            >
+                                {isListening ? "⏹" : "🎤"}
+                            </button>
+                        )}
 
                         <button
                             onClick={sendMessage}
