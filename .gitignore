@@ -36,6 +36,8 @@ backend/scripts/__pycache__/
 
 # Database 
 backend/data/universe.db
+*.db-shm
+*.db-wal
 
 # Raw Data
 backend/data/raw_trending.csv

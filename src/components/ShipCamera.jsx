@@ -4,9 +4,9 @@ import { useKeyboardControls } from '@react-three/drei'
 import * as THREE from 'three'
 import SpaceShip from './models/Optimized'
 
-const ACCELERATION = 9     // units/s²
-const DRAG         = 1.8    // exponential drag
-const MAX_SPEED    = 18     // units/s
+const ACCELERATION = 18     // units/s²
+const DRAG         = 1.6    // exponential drag
+const MAX_SPEED    = 30     // units/s
 const TURN_SPEED   = 1.5    // rad/s (yaw)
 const PITCH_SPEED  = 1.1    // rad/s
 
