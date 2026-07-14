@@ -72,8 +72,9 @@ export default function ShipController({ controlsRef, shipPosRef }) {
 
   return (
     <group ref={groupRef}>
+      <ambientLight intensity={5}/>
       <SpaceShip scale={0.07} />
-      <pointLight position={[0, 1.5, -3]} intensity={2.5} distance={10} decay={1.6} color="#cce8ff" />
+      <pointLight position={[0, 1.5, -3]} intensity={10.5} distance={16} decay={1.4} color="#d8f2ff" />
     </group>
   )
 }
