@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const Chat = () => {
-
-    const [isOpen, setIsOpen] = useState(false);
+const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
 
     const [message, setMessage] = useState("");
 
@@ -112,7 +110,7 @@ const Chat = () => {
     return (
         <>
             <button
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => onOpenChange(!isOpen)}
                 className="
                     fixed
                     bottom-6

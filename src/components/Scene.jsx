@@ -27,7 +27,7 @@ const ORIGIN           = new THREE.Vector3(0, 0, 0)
 const UNIVERSE_DEFAULT = new THREE.Vector3(0, 70, 175)
 const GALAXY_DEFAULT   = new THREE.Vector3(0, 48, 115)
 const SHIP_START       = new THREE.Vector3(0, 2, 18)   // matches ShipController spawn
-const SHIP_CHASE       = new THREE.Vector3(0, 4.5, 27) // behind (+Z) and above the ship
+const SHIP_CHASE       = new THREE.Vector3(0, 1, 3) // behind (+Z) and above the ship
 const CURRENT_YEAR     = new Date().getFullYear()
 
 function formatNumber(n) {
@@ -50,7 +50,7 @@ const CameraController = forwardRef(function CameraController({ transition }, re
   return null
 })
 
-export default function Scene() {
+export default function Scene({ searchOpen, onSearchOpenChange }) {
   const { galaxies, loading, usingFallback } = useUniverse()
 
   const [view,       setView]       = useState('universe') // 'universe' | 'galaxy'
@@ -284,6 +284,8 @@ export default function Scene() {
         {!flyMode && !loading && (
           <SearchBar
             galaxies={galaxies}
+            isOpen={searchOpen}
+            onOpenChange={onSearchOpenChange}
             onPickGalaxy={(id) => enterGalaxy(id)}
             onPickSystem={(gid, system) => enterGalaxy(gid, system)}
           />
