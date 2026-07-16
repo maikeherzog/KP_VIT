@@ -118,11 +118,11 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                     w-14
                     h-14
                     rounded-full
-                    bg-black
+                    bg-slate-800
                     text-white
                     text-2xl
                     shadow-xl
-                    hover:bg-gray-500
+                    hover:bg-slate-700
                     transition
                     duration-300
                     z-50
@@ -140,13 +140,13 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                         right-6
                         w-96
                         h-[500px]
-                        bg-white
+                        bg-slate-950
                         rounded-2xl
                         shadow-2xl
                         flex
                         flex-col
                         overflow-hidden
-                        border
+                        border border-slate-700
                         z-50
                     "
                 >
@@ -154,8 +154,10 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                     {/* Header */}
                     <div
                         className="
-                            bg-black
-                            text-white
+                            bg-slate-900
+                            border-b
+                            border-slate-700
+                            text-slate-100
                             p-4
                             text-lg
                             font-semibold
@@ -164,11 +166,11 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                             items-center
                         "
                     >
-                        <span>Storyteller AI</span>
+                        <span>AI Navigator</span>
 
                         <button
-                            onClick={() => setIsOpen(false)}
-                            className="text-white text-xl"
+                            onClick={() => onOpenChange(false)}
+                            className="text-slate-200 text-xl hover:text-white transition"
                         >
                             ✕
                         </button>
@@ -180,7 +182,8 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                             flex-1
                             p-4
                             overflow-y-auto
-                            bg-black
+                            bg-slate-950
+                            text-slate-100
                             space-y-3
                         "
                     >
@@ -198,8 +201,8 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                                     whitespace-pre-wrap
                                     ${
                                     msg.sender === "user"
-                                        ? "ml-auto bg-gray-700 text-white"
-                                        : "mr-auto bg-white text-black shadow"
+                                        ? "ml-auto bg-indigo-600 text-white shadow-lg"
+                                        : "mr-auto bg-slate-100 text-slate-900 shadow"
                                 }
                                 `}
                             >
@@ -213,9 +216,10 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                         className="
                             p-4
                             border-t
+                            border-slate-700
                             flex
                             gap-2
-                            bg-black
+                            bg-slate-950
                         "
                     >
                         <input
@@ -231,13 +235,16 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                             className="
                                 flex-1
                                 border
+                                border-slate-700
                                 rounded-xl
                                 px-4
                                 py-2
                                 outline-none
                                 focus:ring-2
-                                bg-white
-                                focus:ring-black
+                                focus:ring-slate-500
+                                bg-slate-900
+                                text-slate-100
+                                placeholder-slate-500
                             "
                         />
 
@@ -251,7 +258,7 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                                     transition
                                     ${isListening
                                         ? "bg-red-500 text-white animate-pulse"
-                                        : "bg-white text-black hover:bg-gray-500"}
+                                        : "bg-slate-700 text-slate-100 hover:bg-slate-600"}
                                 `}
                             >
                                 {isListening ? "⏹" : "🎤"}
@@ -261,11 +268,11 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
                         <button
                             onClick={sendMessage}
                             className="
-                                bg-white
-                                text-black
+                                bg-indigo-600
+                                text-white
                                 px-5
                                 rounded-xl
-                                hover:bg-gray-500
+                                hover:bg-indigo-500
                                 transition
                             "
                         >
