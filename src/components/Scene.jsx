@@ -9,10 +9,10 @@ import SearchBar from './SearchBar'
 import Timeline from './Timeline'
 import BoardComputer from './BoardComputer'
 import ProximityDetector from './ProximityDetector'
+import StarDetail from './StarDetail'
 import { layoutSystems } from '../data/galaxyLayout'
 import { useUniverse } from '../data/useUniverse'
 import { galaxyPosition } from '../data/languages'
-import { narrativeFor } from '../data/narrative'
 
 const CONTROLS = [
   { name: 'forward',   keys: ['ArrowUp',    'KeyW'] },
@@ -30,10 +30,9 @@ const SHIP_START       = new THREE.Vector3(0, 2, 18)   // matches ShipController
 const SHIP_CHASE       = new THREE.Vector3(0, 1, 3) // behind (+Z) and above the ship
 const CURRENT_YEAR     = new Date().getFullYear()
 
-function formatNumber(n) {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
-  if (n >= 1_000)     return `${(n / 1_000).toFixed(1)}k`
-  return String(n)
+// star radius from star_count (mirrors StarSystem) — used to frame the zoom
+function starRadius(stars) {
+  return 0.4 + Math.min(1, Math.log10(Math.max(stars, 1)) / 5.4) * 2.6
 }
 
 // Drives the camera during view transitions; exposes an imperative snap().
@@ -155,9 +154,35 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
     setFlyMode((v) => !v)
     setSelected(null)
     setNearby(null)
+    setTransition(null)
   }
 
-  const spacelog = selected ? narrativeFor(selected, activeGalaxy) : null
+  // Click a star → cinematically zoom the camera onto it so its curved surface
+  // fills the frame; the StarDetail HUD lays over it. Camera stays parked (the
+  // transition is left set) until "Zoom Out".
+  function zoomToStar(system) {
+    if (flyMode || !activeGalaxy) { setSelected(system); return }
+    const placed = layoutSystems(activeGalaxy.systems ?? []).find((p) => p.system.id === system.id)
+    if (!placed) { setSelected(system); return }
+
+    const pos = placed.position.clone()
+    const r = starRadius(system.stars)
+    const dir = new THREE.Vector3(0.4, 0.55, 1).normalize()
+    const camPos = pos.clone().add(dir.multiplyScalar(r * 2.0))
+    // aim above + right of centre so the star sinks to the lower-left, HUD to the right
+    const viewDir = pos.clone().sub(camPos).normalize()
+    const right = new THREE.Vector3().crossVectors(viewDir, ORIGIN.clone().setY(1)).normalize()
+    const look = pos.clone().add(right.multiplyScalar(r * 0.9)).add(new THREE.Vector3(0, r * 0.6, 0))
+
+    setSelected(system)
+    setTransition({ phase: 'star', target: camPos, look })
+  }
+
+  function closeStar() {
+    setSelected(null)
+    setTransition({ phase: 'back', target: GALAXY_DEFAULT.clone(), look: ORIGIN })
+    later(() => setTransition(null), 1200)
+  }
 
   return (
     <KeyboardControls map={CONTROLS}>
@@ -172,7 +197,7 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
 
           {view === 'universe'
             ? <Universe galaxies={galaxies} onSelectGalaxy={enterGalaxy} year={year} />
-            : activeGalaxy && <GalaxyView galaxy={activeGalaxy} onSelectSystem={setSelected} />
+            : activeGalaxy && <GalaxyView galaxy={activeGalaxy} onSelectSystem={zoomToStar} />
           }
 
           {!transition && (
@@ -305,38 +330,9 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
           </div>
         )}
 
-        {/* ── Spacelog (system narrative) ── */}
+        {/* ── Star detail scan view (Mass-Effect style) ── */}
         {selected && !flyMode && view === 'galaxy' && (
-          <div className="absolute top-1/2 left-6 -translate-y-1/2 w-80 max-h-[70vh] overflow-auto bg-black/80 border border-white/20 rounded-xl px-5 py-4 font-mono text-white backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs tracking-widest opacity-50">SPACELOG</span>
-              <button
-                className="text-white/40 hover:text-white/90 text-xs"
-                onClick={() => setSelected(null)}
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="flex items-center gap-2 mb-3">
-              <span
-                className="inline-block w-3 h-3 rounded-full flex-shrink-0"
-                style={{ background: selected.habitable ? '#ffd27a' : '#5a7fb5' }}
-              />
-              <span className="font-bold text-sm truncate">{selected.fullName}</span>
-            </div>
-
-            <p className="text-xs leading-relaxed opacity-80 mb-4">{spacelog}</p>
-
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-[11px] opacity-75 border-t border-white/10 pt-3">
-              <span className="opacity-50">language</span><span>{selected.language ?? '—'}</span>
-              <span className="opacity-50">stars</span><span>⭐ {formatNumber(selected.stars)}</span>
-              <span className="opacity-50">forks</span><span>🍴 {formatNumber(selected.forks)}</span>
-              <span className="opacity-50">activity</span><span>{Math.round(selected.activity * 100)}%</span>
-              <span className="opacity-50">status</span>
-              <span>{selected.habitable ? '🌱 habitable' : '🪐 stale'}</span>
-            </div>
-          </div>
+          <StarDetail system={selected} galaxy={activeGalaxy} onClose={closeStar} />
         )}
 
         {/* ── Board computer (fly mode) ── */}
