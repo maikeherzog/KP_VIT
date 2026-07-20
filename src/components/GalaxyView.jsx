@@ -13,11 +13,12 @@ export default function GalaxyView({ galaxy, onSelectSystem }) {
       {/* stars are self-lit; this fills the planets now that per-star lights are gone */}
       <ambientLight intensity={0.45} />
 
-      {placed.map(({ system, position }) => (
+      {placed.map(({ system, position, starSize }) => (
         <StarSystem
           key={system.id}
           system={system}
           position={position}
+          radius={starSize}
           onSelect={onSelectSystem}
         />
       ))}

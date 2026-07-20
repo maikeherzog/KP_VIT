@@ -14,7 +14,7 @@ function Corner({ style }) {
 
 // Scan overlay that lays the ship-console HUD over the zoomed-in 3D star.
 // Styled to match BoardComputer: green frame, scanlines, corner brackets, mono.
-export default function StarDetail({ system, galaxy, onClose }) {
+export default function StarDetail({ system, galaxy }) {
   const galaxyName = galaxy?.name ?? system.language ?? 'an uncharted'
 
   const description = `Long-range sensors register a star within the ${galaxyName} galaxy. `
@@ -110,21 +110,6 @@ export default function StarDetail({ system, galaxy, onClose }) {
           </div>
         </div>
       </div>
-
-      {/* zoom out */}
-      <button
-        onClick={onClose}
-        style={{
-          position: 'absolute', right: '5%', bottom: '6%', pointerEvents: 'auto',
-          padding: '10px 26px',
-          background: `${ACCENT}12`, color: ACCENT,
-          fontFamily: 'monospace', fontWeight: 700, letterSpacing: 1, fontSize: 13,
-          border: `1px solid ${ACCENT}`, borderRadius: 10,
-          boxShadow: `0 0 16px ${ACCENT}22`, cursor: 'pointer',
-        }}
-      >
-        ◂ Zoom Out
-      </button>
     </div>
   )
 }

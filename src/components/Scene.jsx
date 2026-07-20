@@ -30,11 +30,6 @@ const SHIP_START       = new THREE.Vector3(0, 2, 18)   // matches ShipController
 const SHIP_CHASE       = new THREE.Vector3(0, 1, 3) // behind (+Z) and above the ship
 const CURRENT_YEAR     = new Date().getFullYear()
 
-// star radius from star_count (mirrors StarSystem) — used to frame the zoom
-function starRadius(stars) {
-  return 0.4 + Math.min(1, Math.log10(Math.max(stars, 1)) / 5.4) * 2.6
-}
-
 // Drives the camera during view transitions; exposes an imperative snap().
 const CameraController = forwardRef(function CameraController({ transition }, ref) {
   const { camera } = useThree()
@@ -166,7 +161,7 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
     if (!placed) { setSelected(system); return }
 
     const pos = placed.position.clone()
-    const r = starRadius(system.stars)
+    const r = placed.starSize
     const dir = new THREE.Vector3(0.4, 0.55, 1).normalize()
     const camPos = pos.clone().add(dir.multiplyScalar(r * 2.0))
     // aim above + right of centre so the star sinks to the lower-left, HUD to the right
@@ -238,7 +233,7 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
 
         {/* ── Top-centre controls ── */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {view === 'galaxy' && !flyMode && (
+          {view === 'galaxy' && !flyMode && !selected && (
             <button
               className="font-mono text-xs text-white/80 border border-white/30 hover:border-white/70 rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
               onClick={backToUniverse}
@@ -246,8 +241,8 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
               ← Universe
             </button>
           )}
-          {/* Boarding the ship is only possible inside a galaxy */}
-          {view === 'galaxy' && (
+          {/* Boarding the ship is only possible inside a galaxy (not while a star is zoomed) */}
+          {view === 'galaxy' && !selected && (
             <button
               className="font-mono text-xs border rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
               style={{
@@ -259,10 +254,20 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
               {flyMode ? '✕ Exit Ship' : '▶ Board Ship'}
             </button>
           )}
+          {/* In the star detail view, zoom out is the only navigation */}
+          {view === 'galaxy' && !flyMode && selected && (
+            <button
+              className="font-mono text-xs border rounded-lg px-4 py-2 bg-black/60 backdrop-blur-sm transition-colors"
+              style={{ color: '#7CFC9B', borderColor: '#7CFC9B' }}
+              onClick={closeStar}
+            >
+              ◂ Zoom Out
+            </button>
+          )}
         </div>
 
         {/* ── Legend toggle ── */}
-        {!flyMode && (
+        {!flyMode && !selected && (
           <button
             className="absolute top-4 right-4 font-mono text-xs text-white/50 hover:text-white/90 border border-white/20 hover:border-white/50 rounded-lg px-3 py-1.5 transition-colors"
             onClick={() => setShowLegend((v) => !v)}
@@ -272,7 +277,7 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
         )}
 
         {/* ── Legend panel ── */}
-        {showLegend && !flyMode && (
+        {showLegend && !flyMode && !selected && (
           <div className="absolute top-14 right-4 bg-black/70 border border-white/20 rounded-xl px-4 py-3 font-mono text-xs text-white backdrop-blur-sm w-72">
             <div className="font-bold mb-2 opacity-80">
               {view === 'universe' ? 'Universe — Visual Encoding' : 'Galaxy — Visual Encoding'}
@@ -306,7 +311,7 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
         )}
 
         {/* ── Search ── */}
-        {!flyMode && !loading && (
+        {!flyMode && !loading && !selected && (
           <SearchBar
             galaxies={galaxies}
             isOpen={searchOpen}
@@ -332,7 +337,7 @@ export default function Scene({ searchOpen, onSearchOpenChange }) {
 
         {/* ── Star detail scan view (Mass-Effect style) ── */}
         {selected && !flyMode && view === 'galaxy' && (
-          <StarDetail system={selected} galaxy={activeGalaxy} onClose={closeStar} />
+          <StarDetail system={selected} galaxy={activeGalaxy} />
         )}
 
         {/* ── Board computer (fly mode) ── */}

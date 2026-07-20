@@ -72,11 +72,13 @@ function makeStarTexture(baseColor, seed) {
   return tex
 }
 
-export default function StarSystem({ system, position, onSelect }) {
+export default function StarSystem({ system, position, radius: radiusProp, onSelect }) {
   const coreRef = useRef()
   const [hovered, setHovered] = useState(false)
 
-  const radius = starRadius(system.stars)
+  // radius comes from GalaxyView (normalised within the galaxy so sizes vary
+  // visibly); falls back to an absolute log scale if not provided.
+  const radius = radiusProp ?? starRadius(system.stars)
   const color = useMemo(() => starColor(system.born), [system.born])
   const emissiveIntensity = 0.5 + system.activity * 1.8
 
