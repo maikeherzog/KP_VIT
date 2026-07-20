@@ -1,0 +1,6 @@
+.venv
+__pycache__
+**/__pycache__
+*.pyc
+# DB + WAL files are mounted as a volume at runtime, not copied into the image
+data/

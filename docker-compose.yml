@@ -1,0 +1,75 @@
+# Full stack in one command:  docker compose up --build
+#
+# Services:
+#   ollama       – local LLM runtime (CPU)
+#   ollama-pull  – one-shot: downloads the llama3.2:1b model, then exits
+#   data-api     – Maike's FastAPI data backend  (host :8000)
+#   llm-api      – Flask chat + narrator server  (host :3000)
+#   frontend     – the Vite app served by nginx   (host :5173)
+#
+# Open http://localhost:5173  (use "localhost", not 127.0.0.1 → CORS).
+# First run downloads the model (~1.3 GB) and builds images — give it a few minutes.
+#
+# Prereq: run `git lfs pull` once so backend/data/universe.db exists (it is mounted in).
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-models:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: unless-stopped
+
+  ollama-pull:
+    image: ollama/ollama:latest
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=ollama:11434
+    entrypoint: ["/bin/sh", "-c", "until ollama pull llama3.2:1b; do echo 'waiting for ollama...'; sleep 3; done"]
+    restart: "no"
+
+  data-api:
+    build: ./backend
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend/data:/app/backend/data
+    # host 8400 → container 8000 (host 8000 is reserved by Windows on some machines)
+    ports:
+      - "8400:8000"
+    restart: unless-stopped
+
+  llm-api:
+    build: ./backend
+    command: python server.py
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+      - DB_PATH=/app/backend/data/universe.db
+      - PORT=3000
+    volumes:
+      - ./backend/data:/app/backend/data
+    # host 3100 → container 3000 (host 3000 is often already taken)
+    ports:
+      - "3100:3000"
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        # host URLs the browser uses — must match the published ports above
+        VITE_API_URL: http://localhost:8400
+        VITE_LLM_URL: http://localhost:3100
+    ports:
+      - "5173:80"
+    depends_on:
+      - data-api
+      - llm-api
+    restart: unless-stopped
+
+volumes:
+  ollama-models:

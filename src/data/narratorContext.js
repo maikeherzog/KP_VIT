@@ -70,7 +70,7 @@ export async function requestNarration(context, galaxy) {
   if (!context) return ''
 
   try {
-    const response = await fetch('http://localhost:3000/narrate', {
+    const response = await fetch(`${import.meta.env.VITE_LLM_URL ?? 'http://localhost:3000'}/narrate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt: context.prompt }),

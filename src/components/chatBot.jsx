@@ -71,7 +71,7 @@ const Chat = ({ isOpen = false, onOpenChange = () => {} }) => {
 
         try {
 
-            const response = await fetch("http://localhost:3000/chat", {
+            const response = await fetch(`${import.meta.env.VITE_LLM_URL ?? "http://localhost:3000"}/chat`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

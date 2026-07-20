@@ -1,0 +1,8 @@
+# Runtime-only deps for the containers (no dataset-pipeline libs → small image).
+# The data pipeline scripts still use the full requirements.txt.
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+flask==3.1.0
+flask-cors==5.0.0
+requests==2.32.3

@@ -1,0 +1,10 @@
+# context for the frontend image build (root)
+node_modules
+dist
+.git
+.claude
+.VSCodeCounter
+docs
+backend
+*.local
+data

@@ -1,14 +1,18 @@
+import os
 import sqlite3
 import requests
 import json
 import re
+from pathlib import Path
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = "data/universe.db"
+# Configurable so the Docker containers can point at the right places.
+DB_PATH = os.environ.get("DB_PATH", str(Path(__file__).parent / "data" / "universe.db"))
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
 
 def search_repository(repo_name):
     """Search for a repository by name (case-insensitive partial match)"""
@@ -59,7 +63,7 @@ JSON:"""
     try:
         # Get extraction from LLM
         extraction_response = requests.post(
-            "http://localhost:11434/api/generate",
+            f"{OLLAMA_URL}/api/generate",
             json={"model": "llama3.2:1b", "prompt": extraction_prompt, "stream": False}
         )
         extraction_text = extraction_response.json().get("response", "").strip()
@@ -155,7 +159,7 @@ def narrate():
 
     try:
         response = requests.post(
-            "http://localhost:11434/api/generate",
+            f"{OLLAMA_URL}/api/generate",
             json={"model": "llama3.2:1b", "prompt": prompt, "stream": False},
         )
         body = response.json()
@@ -170,4 +174,4 @@ def narrate():
         return jsonify({"error": "Failed to contact Ollama"}), 500
 
 if __name__ == "__main__":
-    app.run(port=3000, debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "3000")))
